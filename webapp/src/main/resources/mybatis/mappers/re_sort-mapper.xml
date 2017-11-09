@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_sort">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReSort">
+        <id column="sort_id" property="sortId" jdbcType="INTEGER"/>
+        <result column="sort_title" property="sortTitle" jdbcType="VARCHAR"/>
+        <result column="sort_status" property="sortStatus" jdbcType="TINYINT"/>
+        <result column="sort_order" property="sortOrder" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT sort_id, sort_title, sort_status, sort_order
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReSort">
+        <include refid="re_sort.SELECT_All_Column"/>
+        FROM re_sort
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReSort">
+        DELETE FROM re_sort
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReSort">
+        INSERT INTO re_sort ( sort_title, 
+          sort_status, sort_order )
+        VALUES ( #{sortTitle,jdbcType=VARCHAR}, 
+          #{sortStatus,jdbcType=TINYINT}, #{sortOrder,jdbcType=TINYINT} )
+        <selectKey keyProperty="sortId" resultType="int">
+            SELECT LAST_INSERT_ID() AS sortId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReSort">
+        INSERT INTO re_sort
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="sortTitle != null">
+                sort_title,
+            </if>
+            <if test="sortStatus != null">
+                sort_status,
+            </if>
+            <if test="sortOrder != null">
+                sort_order,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="sortTitle != null">
+                #{sortTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="sortStatus != null">
+                #{sortStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sortOrder != null">
+                #{sortOrder,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="sortId" resultType="int">
+            SELECT LAST_INSERT_ID() AS sortId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_sort ( sort_title, 
+          sort_status, sort_order )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.sortTitle,jdbcType=VARCHAR}, 
+            #{item.sortStatus,jdbcType=TINYINT}, #{item.sortOrder,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReSort">
+        UPDATE re_sort
+        <set>
+            <if test="sortTitle != null">
+                sort_title = #{sortTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="sortStatus != null">
+                sort_status = #{sortStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReSort">
+        UPDATE re_sort
+        SET sort_title = #{sortTitle,jdbcType=VARCHAR},
+            sort_status = #{sortStatus,jdbcType=TINYINT},
+            sort_order = #{sortOrder,jdbcType=TINYINT}
+        WHERE sort_id = #{sortId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_mission">
+
+    <select id="selectExchangeMissionCount" resultType="int">
+        SELECT COUNT(*)
+        FROM re_recommend_mission
+        WHERE mission_type = 1
+    </select>
+
+    <select id="selectExchangeMissionList" resultMap="BaseResultMap">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE mission_type = 1
+        ORDER BY mission_id ASC
+    </select>
+
+
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="String">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE mission_type = 1
+        AND exchange_code = #{exchangeCode,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="getList" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE '1'='1'
+        <if test="type != null">
+            AND mission_type = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="missionTitle != null">
+            AND mission_title LIKE CONCAT('%',#{missionTitle,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="isLimitTime != null">
+            AND is_limit_time = #{isLimitTime,jdbcType=INTEGER}
+        </if>
+        <if test="isVerify != null">
+            AND is_verify = #{isVerify,jdbcType=INTEGER}
+        </if>
+        ORDER BY mission_order DESC
+    </select>
+
+
+    <select id="getListNum" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM re_recommend_mission
+        WHERE '1'='1'
+        <if test="type != null">
+            AND mission_type = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="missionTitle != null">
+            AND mission_title LIKE CONCAT('%',#{missionTitle,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="isLimitTime != null">
+            AND is_limit_time = #{isLimitTime,jdbcType=INTEGER}
+        </if>
+        <if test="isVerify != null">
+            AND is_verify = #{isVerify,jdbcType=INTEGER}
+        </if>
+    </select>
+
+
+    <select id="selectLockByMissionId" parameterType="long" resultMap="BaseResultMap">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        FOR UPDATE
+    </select>
+
+    <select id="getMissionList" resultMap="BaseResultMap" parameterType="map">
+        <include refid="re_recommend_mission.SELECT_All_Column"/>
+        FROM re_recommend_mission
+        WHERE mission_type = #{type,jdbcType=INTEGER}
+        AND mission_title LIKE CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+        ORDER BY mission_order
+    </select>
+
+    <select id="getNum" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM re_recommend_mission
+        WHERE mission_type = #{type,jdbcType=INTEGER}
+        AND mission_title LIKE CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+    </select>
+
+
+</mapper>

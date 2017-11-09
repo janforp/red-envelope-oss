@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_task_label">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReTaskLabel">
+        <id column="label_id" property="labelId" jdbcType="BIGINT"/>
+        <result column="task_label" property="taskLabel" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT label_id, task_label
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReTaskLabel">
+        <include refid="re_task_label.SELECT_All_Column"/>
+        FROM re_task_label
+        WHERE label_id = #{labelId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReTaskLabel">
+        DELETE FROM re_task_label
+        WHERE label_id = #{labelId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReTaskLabel">
+        INSERT INTO re_task_label ( task_label )
+        VALUES ( #{taskLabel,jdbcType=VARCHAR} )
+        <selectKey keyProperty="labelId" resultType="long">
+            SELECT LAST_INSERT_ID() AS labelId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReTaskLabel">
+        INSERT INTO re_task_label
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="taskLabel != null">
+                task_label,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="taskLabel != null">
+                #{taskLabel,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="labelId" resultType="long">
+            SELECT LAST_INSERT_ID() AS labelId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_task_label ( task_label )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.taskLabel,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReTaskLabel">
+        UPDATE re_task_label
+        <set>
+            <if test="taskLabel != null">
+                task_label = #{taskLabel,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE label_id = #{labelId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReTaskLabel">
+        UPDATE re_task_label
+        SET task_label = #{taskLabel,jdbcType=VARCHAR}
+        WHERE label_id = #{labelId,jdbcType=BIGINT}
+    </update>
+</mapper>

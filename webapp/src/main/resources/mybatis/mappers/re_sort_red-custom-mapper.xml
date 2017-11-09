@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_sort_red">
+    <select id="getAllReds" resultMap="BaseResultMap" parameterType="map">
+        SELECT  red_id AS redId,red_name AS redName,red_img AS redImg,merchant_name AS merchantName,red_reward_desc AS redRewardDesc,red_status AS redStatus,
+                show_or_not AS showOrNot
+        FROM    re_sort_red
+        WHERE   '1'='1'
+        <if test="redName != null">
+            AND red_name LIKE CONCAT('%',#{redName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="merchantName != null">
+            AND merchant_name LIKE CONCAT('%',#{merchantName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="redSort != null">
+            AND red_sort = #{redSort,jdbcType = INTEGER}
+        </if>
+        <if test="redStatus != null">
+            AND red_status = #{redStatus,jdbcType= TINYINT}
+        </if>
+        <if test="showOrNot != null">
+            AND show_or_not = #{showOrNot,jdbcType= TINYINT}
+        </if>
+        <if test="startTimeStamp != null">
+            AND start_time <![CDATA[ > ]]> #{startTimeStamp,jdbcType = BIGINT}
+        </if>
+        <if test="endTimeStamp != null">
+            AND start_time <![CDATA[ < ]]> #{endTimeStamp,jdbcType = BIGINT}
+        </if>
+        ORDER   BY red_order ASC
+    </select>
+
+    <select id="getRedsListNum" resultType="int" parameterType="map">
+        SELECT  COUNT(*)
+        FROM    re_sort_red
+        WHERE   '1'='1'
+        <if test="redName != null">
+            AND red_name LIKE CONCAT('%',#{redName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="merchantName != null">
+            AND merchant_name LIKE CONCAT('%',#{merchantName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="redSort != null">
+            AND red_sort = #{redSort,jdbcType = INTEGER}
+        </if>
+        <if test="redStatus != null">
+            AND red_status = #{redStatus,jdbcType= TINYINT}
+        </if>
+        <if test="showOrNot != null">
+            AND show_or_not = #{showOrNot,jdbcType= TINYINT}
+        </if>
+        <if test="startTimeStamp != null">
+            AND start_time <![CDATA[ > ]]> #{startTimeStamp,jdbcType = BIGINT}
+        </if>
+        <if test="endTimeStamp != null">
+            AND start_time <![CDATA[ < ]]> #{endTimeStamp,jdbcType = BIGINT}
+        </if>
+    </select>
+
+
+</mapper>

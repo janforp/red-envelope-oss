@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_commission_withdraw">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReUserCommissionWithdraw">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="withdraw_status" property="withdrawStatus" jdbcType="TINYINT"/>
+        <result column="apply_money" property="applyMoney" jdbcType="DECIMAL"/>
+        <result column="apply_time" property="applyTime" jdbcType="VARCHAR"/>
+        <result column="withdraw_time" property="withdrawTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_id, withdraw_status, apply_money, apply_time, 
+        withdraw_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReUserCommissionWithdraw">
+        <include refid="re_user_commission_withdraw.SELECT_All_Column"/>
+        FROM re_user_commission_withdraw
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReUserCommissionWithdraw">
+        DELETE FROM re_user_commission_withdraw
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReUserCommissionWithdraw">
+        INSERT INTO re_user_commission_withdraw ( user_id, 
+          withdraw_status, apply_money, apply_time, 
+          withdraw_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{withdrawStatus,jdbcType=TINYINT}, #{applyMoney,jdbcType=DECIMAL}, #{applyTime,jdbcType=VARCHAR}, 
+          #{withdrawTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReUserCommissionWithdraw">
+        INSERT INTO re_user_commission_withdraw
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status,
+            </if>
+            <if test="applyMoney != null">
+                apply_money,
+            </if>
+            <if test="applyTime != null">
+                apply_time,
+            </if>
+            <if test="withdrawTime != null">
+                withdraw_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="withdrawStatus != null">
+                #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="applyMoney != null">
+                #{applyMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="applyTime != null">
+                #{applyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawTime != null">
+                #{withdrawTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_commission_withdraw ( user_id, 
+          withdraw_status, apply_money, apply_time, 
+          withdraw_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.withdrawStatus,jdbcType=TINYINT}, #{item.applyMoney,jdbcType=DECIMAL}, #{item.applyTime,jdbcType=VARCHAR}, 
+            #{item.withdrawTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReUserCommissionWithdraw">
+        UPDATE re_user_commission_withdraw
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status = #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="applyMoney != null">
+                apply_money = #{applyMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="applyTime != null">
+                apply_time = #{applyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawTime != null">
+                withdraw_time = #{withdrawTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReUserCommissionWithdraw">
+        UPDATE re_user_commission_withdraw
+        SET user_id = #{userId,jdbcType=INTEGER},
+            withdraw_status = #{withdrawStatus,jdbcType=TINYINT},
+            apply_money = #{applyMoney,jdbcType=DECIMAL},
+            apply_time = #{applyTime,jdbcType=VARCHAR},
+            withdraw_time = #{withdrawTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

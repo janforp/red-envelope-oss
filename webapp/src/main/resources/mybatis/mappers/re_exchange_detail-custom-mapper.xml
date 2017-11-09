@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_exchange_detail">
+
+    <select id="getDetailByPageNum" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_exchange_detail.SELECT_All_Column"/>
+        FROM re_exchange_detail
+        <if test="status!=null">
+            WHERE exchange_status = #{status,jdbcType=INTEGER}
+        </if>
+        ORDER BY exchange_time DESC
+
+    </select>
+
+    <select id="getExchangeNum"  parameterType="map" resultType="int">
+
+        SELECT COUNT(*)
+        FROM re_exchange_detail
+        <if test="exchangeStatus != null">
+            WHERE exchange_status = #{exchangeStatus,jdbcType=INTEGER}
+        </if>
+
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_package_channel">
+
+    <select id="selectMaxAppId" resultMap="BaseResultMap" >
+        <include refid="re_package_channel.SELECT_All_Column"/>
+        FROM re_package_channel
+        ORDER BY app_id DESC
+        LIMIT 1
+    </select>
+
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(*) FROM re_package_channel
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT * FROM re_package_channel ORDER BY upload_time DESC
+        LIMIT #{start,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+    <select id="getPackageChannelList" resultMap="BaseResultMap">
+        SELECT * FROM re_package_channel ORDER BY channel_name DESC
+    </select>
+
+    <select id="getDistinctChannel" resultType="string">
+        SELECT DISTINCT channel_name FROM re_package_channel ORDER BY channel_name DESC
+    </select>
+    <select id="getDistinctPackage" resultType="string">
+        SELECT DISTINCT package_name FROM re_package_channel ORDER BY package_name DESC
+    </select>
+
+</mapper>

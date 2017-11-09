@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_record">
+
+    <select id="getAllAttentionMemberOfCustomerId" parameterType="int" resultMap="BaseResultMap">
+        <include refid="re_user_record.SELECT_All_Column"/>
+        FROM    re_user_record
+        WHERE   extend_id IN (SELECT id FROM re_customer_extend WHERE customer_id = #{customerId,jdbcType = INTEGER})
+        ORDER   BY    create_time DESC
+    </select>
+
+    <select id="getAllAttentionMemberOfCustomerIdNum" parameterType="int" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_user_record
+        WHERE   extend_id IN (SELECT id FROM re_customer_extend WHERE customer_id = #{customerId,jdbcType = INTEGER})
+    </select>
+
+    <select id="getAllAttentionMemberTodayOfCustomerId" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_user_record.SELECT_All_Column"/>
+        FROM    re_user_record
+        WHERE   extend_id IN (SELECT id FROM re_customer_extend WHERE customer_id = #{customerId,jdbcType = INTEGER})
+        AND     create_time BETWEEN #{startTime,jdbcType=INTEGER} AND #{endTime,jdbcType = INTEGER}
+        ORDER   BY create_time DESC
+    </select>
+
+    <select id="getAllAttentionMemberTodayOfCustomerIdNum" parameterType="map" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_user_record
+        WHERE   extend_id IN (SELECT id FROM re_customer_extend WHERE customer_id = #{customerId,jdbcType = INTEGER})
+        AND     create_time BETWEEN #{startTime,jdbcType=INTEGER} AND #{endTime,jdbcType = INTEGER}
+    </select>
+</mapper>

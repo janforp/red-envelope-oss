@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_account_detail">
+
+    <select id="selectTodayUserMoney" resultType="DECIMAL" parameterType="map">
+        SELECT SUM(account_money)
+        FROM re_account_detail
+        WHERE detail_type = #{detailType,jdbcType=INTEGER}
+        AND instr(detail_time, #{dateTime,jdbcType=VARCHAR})
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+        AND user_id IN (
+        SELECT user_id
+        FROM re_user_channel
+        WHERE instr(create_time, #{dateTime,jdbcType=VARCHAR})
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+        )
+    </select>
+
+    <select id="selectTodayTotalMoney" resultType="DECIMAL" parameterType="map">
+        SELECT SUM(account_money)
+        FROM re_account_detail
+        WHERE detail_type = #{detailType,jdbcType=INTEGER}
+        AND instr(detail_time, #{dateTime,jdbcType=VARCHAR})
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+    </select>
+
+    <!--获取某一天的注册的用户消耗的/获得的金钱-->
+    <select id="getTotalMoneyByDateAndType" resultType="DECIMAL" parameterType="map">
+        SELECT  SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = #{type,jdbcType=INTEGER}
+        AND     user_id IN (SELECT user_id FROM re_user WHERE from_unixtime(create_time/1000 , '%Y-%m-%d') = #{ date, jdbcType=VARCHAR})
+    </select>
+
+    <!--获取某一天所有用户消耗的/获得的金钱-->
+    <select id="getTotalGetMoneyByType" resultType="DECIMAL" parameterType="map">
+        SELECT  SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = #{type,jdbcType=INTEGER}
+        AND     detail_time LIKE CONCAT('%',#{date, jdbcType=VARCHAR},'%')
+    </select>
+
+
+    <!--获取某段时间内
+     * 新注册用户
+     * 获得/消耗的金钱
+     *  如:2016-7-8至2016-7-26日之间-->
+    <select id="getTotalMoneyByNewUserAndTimeScopeAndType" resultType="DECIMAL" parameterType="map">
+        SELECT  SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = #{type,jdbcType=INTEGER}
+        AND     user_id
+        IN (SELECT user_id FROM re_user WHERE from_unixtime(create_time/1000 , '%Y-%m-%d') BETWEEN #{ startDate, jdbcType=VARCHAR} AND #{ endDate, jdbcType=VARCHAR})
+    </select>
+    <!--获取某段时间呢内
+     * 所有用户
+     * 获得/消耗的金币
+     * 如:2016-7-8至2016-7-26日之间
+     * 则统计在这段时内所有用户所获取/消耗的金钱-->
+    <select id="getTotalMoneyByAllUserAndTimeScopeAndType" parameterType="map" resultType="DECIMAL">
+        SELECT  SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = #{type,jdbcType=INTEGER}
+        AND     LEFT(detail_time,10) BETWEEN #{ startDate, jdbcType=VARCHAR} AND #{ endDate, jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="getTotalMoneyByUserIds" resultType="DECIMAL" parameterType="map">
+        SELECT  SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = #{type,jdbcType=INTEGER}
+        AND     user_id IN(<foreach collection="userIds" item="userId" index="index" separator=",">#{userId,jdbcType=INTEGER}</foreach>)
+        AND     detail_time BETWEEN  #{ startDate, jdbcType=VARCHAR} AND #{ endDate, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getTotalMoneyByUserIdAndType" parameterType="map" resultType="DECIMAL">
+        SELECT  SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = #{type,jdbcType=INTEGER}
+        AND     user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getNum"  parameterType="int" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_account_detail
+        WHERE   user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getList" parameterType="int" resultMap="BaseResultMap">
+        <include refid="re_account_detail.SELECT_All_Column"/>
+        FROM    re_account_detail
+        WHERE   user_id = #{userId,jdbcType=INTEGER}
+        ORDER   BY detail_time DESC
+    </select>
+
+    <select id="getShouldPayMoney" resultType="DECIMAL" parameterType="map">
+      SELECT    SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = 1
+        AND     mission_type = #{missionType,jdbcType=INTEGER}
+        AND     mission_subtype = #{subType,jdbcType=INTEGER}
+        AND     INSTR(detail_time , #{today,jdbcType=VARCHAR})
+    </select>
+
+    <select id="getFinalPayMoney" resultType="DECIMAL" parameterType="map">
+        SELECT    SUM(account_money)
+        FROM    re_account_detail
+        WHERE   detail_type = 1
+        AND     mission_type = #{missionType,jdbcType=INTEGER}
+        AND     mission_subtype = #{subType,jdbcType=INTEGER}
+        AND     INSTR(detail_time , #{today,jdbcType=VARCHAR})
+    </select>
+
+</mapper>

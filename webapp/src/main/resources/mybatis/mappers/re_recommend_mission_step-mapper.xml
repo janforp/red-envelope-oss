@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_mission_step">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReRecommendMissionStep">
+        <id column="step_id" property="stepId" jdbcType="BIGINT"/>
+        <result column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="step_num" property="stepNum" jdbcType="TINYINT"/>
+        <result column="step_content" property="stepContent" jdbcType="VARCHAR"/>
+        <result column="step_imgs" property="stepImgs" jdbcType="VARCHAR"/>
+        <result column="step_btn" property="stepBtn" jdbcType="VARCHAR"/>
+        <result column="step_status" property="stepStatus" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT step_id, mission_id, step_num, step_content, step_imgs, 
+        step_btn, step_status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReRecommendMissionStep">
+        <include refid="re_recommend_mission_step.SELECT_All_Column"/>
+        FROM re_recommend_mission_step
+        WHERE step_id = #{stepId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReRecommendMissionStep">
+        DELETE FROM re_recommend_mission_step
+        WHERE step_id = #{stepId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReRecommendMissionStep">
+        INSERT INTO re_recommend_mission_step ( mission_id, 
+          step_num, step_content, step_imgs, 
+          step_btn, step_status )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{stepNum,jdbcType=TINYINT}, #{stepContent,jdbcType=VARCHAR}, #{stepImgs,jdbcType=VARCHAR}, 
+          #{stepBtn,jdbcType=VARCHAR}, #{stepStatus,jdbcType=TINYINT} )
+        <selectKey keyProperty="stepId" resultType="long">
+            SELECT LAST_INSERT_ID() AS stepId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReRecommendMissionStep">
+        INSERT INTO re_recommend_mission_step
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionId != null">
+                mission_id,
+            </if>
+            <if test="stepNum != null">
+                step_num,
+            </if>
+            <if test="stepContent != null">
+                step_content,
+            </if>
+            <if test="stepImgs != null">
+                step_imgs,
+            </if>
+            <if test="stepBtn != null">
+                step_btn,
+            </if>
+            <if test="stepStatus != null">
+                step_status,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionId != null">
+                #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="stepNum != null">
+                #{stepNum,jdbcType=TINYINT},
+            </if>
+            <if test="stepContent != null">
+                #{stepContent,jdbcType=VARCHAR},
+            </if>
+            <if test="stepImgs != null">
+                #{stepImgs,jdbcType=VARCHAR},
+            </if>
+            <if test="stepBtn != null">
+                #{stepBtn,jdbcType=VARCHAR},
+            </if>
+            <if test="stepStatus != null">
+                #{stepStatus,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="stepId" resultType="long">
+            SELECT LAST_INSERT_ID() AS stepId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_recommend_mission_step ( mission_id, 
+          step_num, step_content, step_imgs, 
+          step_btn, step_status )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.stepNum,jdbcType=TINYINT}, #{item.stepContent,jdbcType=VARCHAR}, #{item.stepImgs,jdbcType=VARCHAR}, 
+            #{item.stepBtn,jdbcType=VARCHAR}, #{item.stepStatus,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReRecommendMissionStep">
+        UPDATE re_recommend_mission_step
+        <set>
+            <if test="missionId != null">
+                mission_id = #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="stepNum != null">
+                step_num = #{stepNum,jdbcType=TINYINT},
+            </if>
+            <if test="stepContent != null">
+                step_content = #{stepContent,jdbcType=VARCHAR},
+            </if>
+            <if test="stepImgs != null">
+                step_imgs = #{stepImgs,jdbcType=VARCHAR},
+            </if>
+            <if test="stepBtn != null">
+                step_btn = #{stepBtn,jdbcType=VARCHAR},
+            </if>
+            <if test="stepStatus != null">
+                step_status = #{stepStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE step_id = #{stepId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReRecommendMissionStep">
+        UPDATE re_recommend_mission_step
+        SET mission_id = #{missionId,jdbcType=BIGINT},
+            step_num = #{stepNum,jdbcType=TINYINT},
+            step_content = #{stepContent,jdbcType=VARCHAR},
+            step_imgs = #{stepImgs,jdbcType=VARCHAR},
+            step_btn = #{stepBtn,jdbcType=VARCHAR},
+            step_status = #{stepStatus,jdbcType=TINYINT}
+        WHERE step_id = #{stepId,jdbcType=BIGINT}
+    </update>
+</mapper>

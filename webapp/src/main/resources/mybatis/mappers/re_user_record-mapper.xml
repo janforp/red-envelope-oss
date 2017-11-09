@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_record">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReUserRecord">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="extend_id" property="extendId" jdbcType="INTEGER"/>
+        <result column="user_openid" property="userOpenid" jdbcType="VARCHAR"/>
+        <result column="user_nickname" property="userNickname" jdbcType="VARCHAR"/>
+        <result column="user_img" property="userImg" jdbcType="VARCHAR"/>
+        <result column="envelope_money" property="envelopeMoney" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="INTEGER"/>
+        <result column="user_ip" property="userIp" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, extend_id, user_openid, user_nickname, user_img, 
+        envelope_money, create_time, user_ip
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReUserRecord">
+        <include refid="re_user_record.SELECT_All_Column"/>
+        FROM re_user_record
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReUserRecord">
+        DELETE FROM re_user_record
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReUserRecord">
+        INSERT INTO re_user_record ( extend_id, 
+          user_openid, user_nickname, user_img, 
+          envelope_money, create_time, user_ip )
+        VALUES ( #{extendId,jdbcType=INTEGER}, 
+          #{userOpenid,jdbcType=VARCHAR}, #{userNickname,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR}, 
+          #{envelopeMoney,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, #{userIp,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReUserRecord">
+        INSERT INTO re_user_record
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="extendId != null">
+                extend_id,
+            </if>
+            <if test="userOpenid != null">
+                user_openid,
+            </if>
+            <if test="userNickname != null">
+                user_nickname,
+            </if>
+            <if test="userImg != null">
+                user_img,
+            </if>
+            <if test="envelopeMoney != null">
+                envelope_money,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userIp != null">
+                user_ip,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="extendId != null">
+                #{extendId,jdbcType=INTEGER},
+            </if>
+            <if test="userOpenid != null">
+                #{userOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickname != null">
+                #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userImg != null">
+                #{userImg,jdbcType=VARCHAR},
+            </if>
+            <if test="envelopeMoney != null">
+                #{envelopeMoney,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=INTEGER},
+            </if>
+            <if test="userIp != null">
+                #{userIp,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_record ( extend_id, 
+          user_openid, user_nickname, user_img, 
+          envelope_money, create_time, user_ip )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.extendId,jdbcType=INTEGER}, 
+            #{item.userOpenid,jdbcType=VARCHAR}, #{item.userNickname,jdbcType=VARCHAR}, #{item.userImg,jdbcType=VARCHAR}, 
+            #{item.envelopeMoney,jdbcType=INTEGER}, #{item.createTime,jdbcType=INTEGER}, #{item.userIp,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReUserRecord">
+        UPDATE re_user_record
+        <set>
+            <if test="extendId != null">
+                extend_id = #{extendId,jdbcType=INTEGER},
+            </if>
+            <if test="userOpenid != null">
+                user_openid = #{userOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickname != null">
+                user_nickname = #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userImg != null">
+                user_img = #{userImg,jdbcType=VARCHAR},
+            </if>
+            <if test="envelopeMoney != null">
+                envelope_money = #{envelopeMoney,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=INTEGER},
+            </if>
+            <if test="userIp != null">
+                user_ip = #{userIp,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReUserRecord">
+        UPDATE re_user_record
+        SET extend_id = #{extendId,jdbcType=INTEGER},
+            user_openid = #{userOpenid,jdbcType=VARCHAR},
+            user_nickname = #{userNickname,jdbcType=VARCHAR},
+            user_img = #{userImg,jdbcType=VARCHAR},
+            envelope_money = #{envelopeMoney,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=INTEGER},
+            user_ip = #{userIp,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

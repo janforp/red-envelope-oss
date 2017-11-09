@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_mission_step">
+
+    <select id="getAllByMissionId" resultMap="BaseResultMap" parameterType="long">
+        <include refid="re_recommend_mission_step.SELECT_All_Column"/>
+        FROM re_recommend_mission_step
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        ORDER BY step_id ASC
+    </select>
+
+    <delete id="deleteByMissionId" parameterType="long">
+        DELETE FROM re_recommend_mission_step
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

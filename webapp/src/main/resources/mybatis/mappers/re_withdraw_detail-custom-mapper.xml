@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_withdraw_detail">
+
+    <select id="getAllWithdraws" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_withdraw_detail.SELECT_All_Column"/>
+        FROM    re_withdraw_detail
+        WHERE   '1'='1'
+        <if test="withdrawType != null">
+            AND withdraw_type = #{withdrawType,jdbcType=INTEGER}
+        </if>
+        <if test="withdrawStatus != null">
+            AND withdraw_status = #{withdrawStatus,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            AND apply_time <![CDATA[ >= ]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null">
+            AND apply_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+        </if>
+        <if test="cellphone != null">
+            AND user_id IN (SELECT user_id FROM re_user WHERE mobile = #{cellphone,jdbcType=VARCHAR})
+        </if>
+        ORDER BY  apply_time DESC
+    </select>
+
+    <select id="getWithdrawNum" parameterType="map" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_withdraw_detail
+        WHERE   '1'='1'
+        <if test="withdrawType != null">
+            AND withdraw_type = #{withdrawType,jdbcType=INTEGER}
+        </if>
+        <if test="withdrawStatus != null">
+            AND withdraw_status = #{withdrawStatus,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            AND apply_time <![CDATA[ >= ]]> #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null">
+            AND apply_time <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR}
+        </if>
+        <if test="cellphone != null">
+            AND user_id IN (SELECT user_id FROM re_user WHERE mobile = #{cellphone,jdbcType=VARCHAR})
+        </if>
+    </select>
+
+    <select id="getWithdrawMoneyByUserIdAndStatus" resultType="DECIMAL" parameterType="map">
+        SELECT  SUM(withdraw_money)
+        FROM    re_withdraw_detail
+        WHERE   user_id=#{userId,jdbcType=INTEGER}
+        AND     withdraw_status = #{status,jdbcType=INTEGER}
+    </select>
+
+</mapper>

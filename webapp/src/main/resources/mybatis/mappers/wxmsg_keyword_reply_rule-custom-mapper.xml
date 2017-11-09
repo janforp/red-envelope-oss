@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wxmsg_keyword_reply_rule">
+
+    <delete id="deleteByCustomerId" parameterType="INTEGER">
+        DELETE FROM wxmsg_keyword_reply_rule
+        WHERE customer_id = #{customerId,jdbcType=INTEGER}
+    </delete>
+
+    <select id="selectByCustomerId" resultMap="BaseResultMap" parameterType="INTEGER">
+        <include refid="wxmsg_keyword_reply_rule.SELECT_All_Column"/>
+        FROM wxmsg_keyword_reply_rule
+        WHERE customer_id = #{customerId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        <include refid="wxmsg_keyword_reply_rule.SELECT_All_Column"/>
+        FROM wxmsg_keyword_reply_rule
+        ORDER BY rule_id
+    </select>
+
+</mapper>

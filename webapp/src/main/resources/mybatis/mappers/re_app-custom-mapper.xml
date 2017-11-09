@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app">
+
+
+    <select id="getList" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_app.SELECT_All_Column"/>
+        FROM    re_app
+        WHERE   '1'='1'
+        <if test="appName != null">
+            AND     app_name LIKE CONCAT('%',#{appName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="marketId != null">
+            AND     market_id   = #{marketId,jdbcType=INTEGER}
+        </if>
+        <if test="packageName != null">
+            AND     app_package   LIKE CONCAT('%',#{packageName,jdbcType=VARCHAR},'%')
+        </if>
+
+        ORDER   BY create_time DESC
+    </select>
+
+    <select id="getNum" parameterType="map" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_app
+        WHERE   '1'='1'
+        <if test="appName != null">
+            AND     app_name LIKE CONCAT('%',#{appName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="marketId != null">
+            AND     market_id   = #{marketId,jdbcType=INTEGER}
+        </if>
+        <if test="packageName != null">
+            AND     app_package   LIKE CONCAT('%',#{packageName,jdbcType=VARCHAR},'%')
+        </if>
+
+    </select>
+
+    <select id="selectAppByMarketIdAndPackageName" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_app.SELECT_All_Column"/>
+        FROM    re_app
+        WHERE   market_id   = #{marketId,jdbcType=INTEGER}
+        AND     app_package   = #{packageName,jdbcType=VARCHAR}
+    </select>
+
+
+</mapper>

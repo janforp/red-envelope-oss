@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_address">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReAddress">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="detail_address" property="detailAddress" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT user_id, real_name, mobile, province, city, 
+        detail_address
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReAddress">
+        <include refid="re_address.SELECT_All_Column"/>
+        FROM re_address
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReAddress">
+        DELETE FROM re_address
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReAddress">
+        INSERT INTO re_address ( user_id, 
+          real_name, mobile, province, 
+          city, detail_address )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{realName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+          #{city,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReAddress">
+        INSERT INTO re_address
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                user_id,
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="detailAddress != null">
+                detail_address,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{userId,jdbcType=INTEGER},
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="detailAddress != null">
+                #{detailAddress,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_address ( user_id, 
+          real_name, mobile, province, 
+          city, detail_address )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.realName,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, #{item.province,jdbcType=VARCHAR}, 
+            #{item.city,jdbcType=VARCHAR}, #{item.detailAddress,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReAddress">
+        UPDATE re_address
+        <set>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="detailAddress != null">
+                detail_address = #{detailAddress,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReAddress">
+        UPDATE re_address
+        SET real_name = #{realName,jdbcType=VARCHAR},
+            mobile = #{mobile,jdbcType=VARCHAR},
+            province = #{province,jdbcType=VARCHAR},
+            city = #{city,jdbcType=VARCHAR},
+            detail_address = #{detailAddress,jdbcType=VARCHAR}
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

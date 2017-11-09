@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app_keywords">
+
+    <resultMap id="keywordList" type="com.envolope.oss.model.vo.mission.KeywordListVo">
+        <id column="keyword_id" property="keywordId" jdbcType="BIGINT"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="market_title_icon" property="marketTitleIcon" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="keyword" property="keyword" jdbcType="DECIMAL"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="left_num" property="leftNum" jdbcType="VARCHAR"/>
+        <result column="release_time" property="releaseTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getNum" resultType="int" parameterType="map">
+        SELECT  count(*)
+        FROM    re_app_keywords a LEFT JOIN re_app b ON a.app_id = b.app_id ,re_app_market c
+        WHERE   b.market_id = c.market_id
+        <if test="keyword != null">
+            AND a.keyword LIKE concat('%',#{keyword,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="appName != null">
+            AND b.app_name LIKE CONCAT('%',#{appName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="marketId != null">
+            AND c.market_id = #{marketId,jdbcType=INTEGER}
+        </if>
+        <if test="releaseTime != null">
+            AND a.release_time <![CDATA[>=]]> #{releaseTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.release_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND a.release_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND a.left_num > 0
+                    AND a.end_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND a.left_num  = 0
+                    OR  a.end_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <otherwise></otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <select id="getAllList" resultMap="BaseResultMap">
+        <include refid="re_app_keywords.SELECT_All_Column"/>
+        FROM re_app_keywords
+        WHERE app_id = #{appId,jdbcType=INTEGER}
+        ORDER BY  keyword ASC
+    </select>
+
+
+    <select id="getList" resultMap="keywordList" parameterType="map">
+        SELECT  a.keyword_id,b.app_name,b.app_icon,c.market_title_icon,a.keyword,a.money,a.total_num ,a.left_num,a.release_time,a.end_time
+        FROM    re_app_keywords a LEFT JOIN re_app b ON a.app_id = b.app_id ,re_app_market c
+        WHERE   b.market_id = c.market_id
+        AND     (a.left_num > 0 AND a.release_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR} AND a.end_time >=  #{nowTime,jdbcType=VARCHAR})
+        <if test="keyword != null">
+            AND a.keyword LIKE concat('%',#{keyword,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="appName != null">
+            AND b.app_name LIKE CONCAT('%',#{appName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="marketId != null">
+            AND c.market_id = #{marketId,jdbcType=INTEGER}
+        </if>
+        <if test="releaseTime != null">
+            AND a.release_time <![CDATA[>=]]> #{releaseTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.release_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND a.release_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND a.left_num > 0
+                    AND a.end_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND a.left_num  = 0
+                    OR  a.end_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <otherwise></otherwise>
+            </choose>
+        </if>
+
+        UNION
+
+        SELECT  a.keyword_id,b.app_name,b.app_icon,c.market_title_icon,a.keyword,a.money,a.total_num ,a.left_num,a.release_time,a.end_time
+        FROM    re_app_keywords a LEFT JOIN re_app b ON a.app_id = b.app_id ,re_app_market c
+        WHERE   b.market_id = c.market_id
+        AND     a.release_time <![CDATA[>]]> #{nowTime,jdbcType=VARCHAR}
+        <if test="keyword != null">
+            AND a.keyword LIKE concat('%',#{keyword,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="appName != null">
+            AND b.app_name LIKE CONCAT('%',#{appName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="marketId != null">
+            AND c.market_id = #{marketId,jdbcType=INTEGER}
+        </if>
+        <if test="releaseTime != null">
+            AND a.release_time <![CDATA[>=]]> #{releaseTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.release_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND a.release_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND a.left_num > 0
+                    AND a.end_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND a.left_num  = 0
+                    OR  a.end_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <otherwise></otherwise>
+            </choose>
+        </if>
+
+        UNION
+
+        SELECT  a.keyword_id,b.app_name,b.app_icon,c.market_title_icon,a.keyword,a.money,a.total_num ,a.left_num,a.release_time,a.end_time
+        FROM    re_app_keywords a LEFT JOIN re_app b ON a.app_id = b.app_id ,re_app_market c
+        WHERE   b.market_id = c.market_id
+        AND     (a.left_num = 0 OR a.end_time <![CDATA[<]]>  #{nowTime,jdbcType=VARCHAR})
+        <if test="keyword != null">
+            AND a.keyword LIKE concat('%',#{keyword,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="appName != null">
+            AND b.app_name LIKE CONCAT('%',#{appName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="marketId != null">
+            AND c.market_id = #{marketId,jdbcType=INTEGER}
+        </if>
+        <if test="releaseTime != null">
+            AND a.release_time <![CDATA[>=]]> #{releaseTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.release_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND a.release_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND a.left_num > 0
+                    AND a.end_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND a.left_num  = 0
+                    OR  a.end_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <otherwise></otherwise>
+            </choose>
+        </if>
+    </select>
+</mapper>

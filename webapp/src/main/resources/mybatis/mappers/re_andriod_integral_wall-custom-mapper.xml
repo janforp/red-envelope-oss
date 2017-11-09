@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_andriod_integral_wall">
+
+    <resultMap id="SelfIntegralListVo" type="com.envolope.oss.model.vo.mission.SelfIntegralListVo">
+        <id column="wall_id" property="wallId" jdbcType="BIGINT"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="app_icon" property="appIcon" jdbcType="VARCHAR"/>
+        <result column="app_package" property="appPackage" jdbcType="VARCHAR"/>
+        <result column="app_label" property="appLabel" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="total_num" property="totalNum" jdbcType="INTEGER"/>
+        <result column="total_money" property="totalMoney" jdbcType="DECIMAL"/>
+        <result column="step_one_money" property="stepOneMoney" jdbcType="DECIMAL"/>
+        <result column="step_two_money" property="stepTwoMoney" jdbcType="DECIMAL"/>
+        <result column="step_two_day" property="stepTwoDay" jdbcType="INTEGER"/>
+        <result column="wall_weight" property="wallWeight" jdbcType="TINYINT"/>
+        <result column="is_limit_num" property="isLimitNum" jdbcType="TINYINT"/>
+        <result column="complete_num" property="completeNum" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getList" resultMap="SelfIntegralListVo" parameterType="map">
+        SELECT a.wall_id, a.app_name, a.app_icon, a.app_package,
+        a.app_label,a.start_time, a.end_time,a.total_num, a.total_money,
+        a.step_one_money, a.step_two_money, a.step_two_day,a.wall_weight,c.complete_num AS complete_num,'进行中' AS status,a.is_limit_num
+        FROM re_andriod_integral_wall a
+        LEFT JOIN (SELECT  COUNT(DISTINCT(b.user_id)) as complete_num,b.wall_id FROM re_andriod_user_task b WHERE b.task_status = 1 GROUP BY b.wall_id) c
+        ON    a.wall_id = c.wall_id
+        WHERE '1'='1'
+        AND (a.start_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR} AND a.end_time <![CDATA[ > ]]> #{nowTime,jdbcType=VARCHAR})
+        AND (a.left_num > 0 OR a.left_num IS NULL )
+        <if test="appName != null">
+            AND INSTR(a.app_name,#{appName,jdbcType=VARCHAR})
+        </if>
+        <if test="appPackage != null">
+            AND INSTR(a.app_package,#{appPackage,jdbcType=VARCHAR})
+        </if>
+        <if test="startTime != null">
+            AND a.start_time >= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.start_time >= #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND (a.start_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR} AND a.end_time <![CDATA[ > ]]> #{nowTime,jdbcType=VARCHAR})
+                    AND (a.left_num > 0 OR a.left_num IS NULL )
+                </when>
+                <when test="status == 2">
+                    AND a.end_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+                    OR  a.left_num = 0
+                </when><otherwise></otherwise>
+            </choose>
+        </if>
+
+        UNION
+
+        SELECT a.wall_id, a.app_name, a.app_icon, a.app_package,
+        a.app_label,a.start_time, a.end_time,a.total_num, a.total_money,
+        a.step_one_money, a.step_two_money, a.step_two_day,a.wall_weight,c.complete_num AS complete_num,'未开始' AS status,a.is_limit_num
+        FROM re_andriod_integral_wall a
+        LEFT JOIN (SELECT  COUNT(DISTINCT(b.user_id)) as complete_num,b.wall_id FROM re_andriod_user_task b WHERE b.task_status = 1 GROUP BY b.wall_id) c
+        ON    a.wall_id = c.wall_id
+        WHERE (a.start_time >= #{nowTime,jdbcType=VARCHAR})
+        <if test="appName != null">
+            AND INSTR(a.app_name,#{appName,jdbcType=VARCHAR})
+        </if>
+        <if test="appPackage != null">
+            AND INSTR(a.app_package,#{appPackage,jdbcType=VARCHAR})
+        </if>
+        <if test="startTime != null">
+            AND a.start_time >= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.start_time >= #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND (a.start_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR} AND a.end_time <![CDATA[ > ]]> #{nowTime,jdbcType=VARCHAR})
+                    AND (a.left_num > 0 OR a.left_num IS NULL )
+                </when>
+                <when test="status == 2">
+                    AND a.end_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+                    OR  a.left_num = 0
+                </when><otherwise></otherwise>
+            </choose>
+        </if>
+
+        UNION
+
+        SELECT a.wall_id, a.app_name, a.app_icon, a.app_package,
+        a.app_label,a.start_time, a.end_time,a.total_num, a.total_money,
+        a.step_one_money, a.step_two_money, a.step_two_day,a.wall_weight,c.complete_num AS complete_num,'已结束' AS status,a.is_limit_num
+        FROM re_andriod_integral_wall a
+        LEFT JOIN (SELECT  COUNT(DISTINCT(b.user_id)) as complete_num,b.wall_id FROM re_andriod_user_task b WHERE b.task_status = 1 GROUP BY b.wall_id) c
+        ON    a.wall_id = c.wall_id
+        WHERE (a.end_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR} OR a.left_num = 0)
+        <if test="appName != null">
+            AND INSTR(a.app_name,#{appName,jdbcType=VARCHAR})
+        </if>
+        <if test="appPackage != null">
+            AND INSTR(a.app_package,#{appPackage,jdbcType=VARCHAR})
+        </if>
+        <if test="startTime != null">
+            AND a.start_time >= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.start_time >= #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND (a.start_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR} AND a.end_time <![CDATA[ > ]]> #{nowTime,jdbcType=VARCHAR})
+                    AND (a.left_num > 0 OR a.left_num IS NULL )
+                </when>
+                <when test="status == 2">
+                    AND a.end_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+                    OR  a.left_num = 0
+                </when><otherwise></otherwise>
+            </choose>
+        </if>
+    </select>
+
+    <select id="getNum" resultType="int" parameterType="map">
+
+        SELECT COUNT(*)
+        FROM re_andriod_integral_wall a
+        LEFT JOIN (SELECT  COUNT(DISTINCT(b.user_id)) as complete_num,b.wall_id FROM re_andriod_user_task b WHERE b.task_status = 1 GROUP BY b.wall_id) c
+        ON    a.wall_id = c.wall_id
+        WHERE '1'='1'
+        <if test="appName != null">
+            AND INSTR(a.app_name,#{appName,jdbcType=VARCHAR})
+        </if>
+        <if test="appPackage != null">
+            AND INSTR(a.app_package,#{appPackage,jdbcType=VARCHAR})
+        </if>
+        <if test="startTime != null">
+            AND a.start_time >= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND a.start_time >= #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND (a.start_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR} AND a.end_time <![CDATA[ > ]]> #{nowTime,jdbcType=VARCHAR})
+                    AND (a.left_num > 0 OR a.left_num IS NULL )
+                </when>
+                <when test="status == 2">
+                    AND a.end_time <![CDATA[ <= ]]> #{nowTime,jdbcType=VARCHAR}
+                    OR  a.left_num = 0
+                </when>
+                <otherwise>
+
+                </otherwise>
+            </choose>
+        </if>
+
+    </select>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_score_detail">
+
+    <select id="selectTodayUserCoin" resultType="Integer" parameterType="map">
+        SELECT SUM(score)
+        FROM re_score_detail
+        WHERE score_type = #{scoreType,jdbcType=INTEGER}
+        AND instr(score_time, #{dateTime,jdbcType=VARCHAR})
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+        AND user_id IN (
+        SELECT user_id
+        FROM re_user_channel
+        WHERE instr(create_time, #{dateTime,jdbcType=VARCHAR})
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+        )
+    </select>
+
+    <select id="selectTodayTotalCoin" resultType="Integer" parameterType="map">
+        SELECT SUM(score)
+        FROM re_score_detail
+        WHERE score_type = #{scoreType,jdbcType=INTEGER}
+        AND instr(score_time, #{dateTime,jdbcType=VARCHAR})
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+    </select>
+
+    <!--获取某一天的注册的用户消耗的/获得的总金币-->
+    <select id="getTotalScoreByDateAndType" resultType="int" parameterType="map">
+        SELECT  SUM(score)
+        FROM    re_score_detail
+        WHERE   score_type = #{type,jdbcType=INTEGER}
+        AND     user_id IN (SELECT user_id FROM re_user WHERE from_unixtime(create_time/1000 , '%Y-%m-%d') = #{ date, jdbcType=VARCHAR})
+    </select>
+    <!--获取某一天所有用户消耗的/获得的金币-->
+    <select id="getTotalGetScoreByType" resultType="int" parameterType="map">
+        SELECT  SUM(score)
+        FROM    re_score_detail
+        WHERE   score_type = #{type,jdbcType=INTEGER}
+        AND     score_time LIKE CONCAT('%',#{date, jdbcType=VARCHAR},'%')
+    </select>
+    <!--获取某段时间内
+     *  注册用户
+     *  获得/消耗的金币
+     *  如:2016-7-8至2016-7-26日之间-->
+    <select id="getTotalScoreByNewUsersAndTimeScopeAndType" resultType="int" parameterType="map">
+        SELECT  SUM(score)
+        FROM    re_score_detail
+        WHERE   score_type = #{type,jdbcType=INTEGER}
+        AND     user_id
+        IN (SELECT user_id FROM re_user WHERE from_unixtime(create_time/1000 , '%Y-%m-%d') BETWEEN #{ startDate, jdbcType=VARCHAR} AND #{ endDate, jdbcType=VARCHAR})
+    </select>
+    <!--获取某段时间呢内
+     * 所有用户
+     * 获得/消耗的金币
+     * 如:2016-7-8至2016-7-26日之间
+     * 则统计在这段时所有用户,截止2016-7-26日所获取/消耗的金币数-->
+    <select id="getTotalScoreByAllUserAndTimeScopeAndType" parameterType="map" resultType="int">
+        SELECT  SUM(score)
+        FROM    re_score_detail
+        WHERE   score_type = #{type,jdbcType=INTEGER}
+        AND     LEFT(score_time,10) BETWEEN #{ startDate, jdbcType=VARCHAR} AND #{ endDate, jdbcType=VARCHAR}
+    </select>
+    <!--获取这些userId在这段时间内获得/消耗的积分-->
+    <select id="getTotalScoresByUserIds" resultType="int" parameterType="map">
+        SELECT  SUM(score)
+        FROM    re_score_detail
+        WHERE   score_type = #{type,jdbcType=INTEGER}
+        AND     score_time BETWEEN  #{ startDate, jdbcType=VARCHAR} AND #{ endDate, jdbcType=VARCHAR}
+        AND     user_id IN <foreach collection="userIds" item="userId" index="index" separator="," open="(" close=")">#{userId,jdbcType=INTEGER}</foreach>
+    </select>
+
+    <select id="getNum" resultType="int" parameterType="int">
+        SELECT  COUNT(*)
+        FROM    re_score_detail
+        WHERE   user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getList" parameterType="int" resultMap="BaseResultMap">
+        <include refid="re_score_detail.SELECT_All_Column"/>
+        FROM    re_score_detail
+        WHERE   user_id = #{userId,jdbcType=INTEGER}
+        ORDER   BY score_time DESC
+    </select>
+
+    <select id="getTotalScoreByUserIdAndType" parameterType="map" resultType="int">
+        SELECT  SUM(score)
+        FROM    re_score_detail
+        WHERE   score_type = #{type,jdbcType=INTEGER}
+        AND     user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

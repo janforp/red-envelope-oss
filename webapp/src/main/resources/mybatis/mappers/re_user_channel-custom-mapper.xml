@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_channel">
+
+    <select id="getNewUserNumByChannelPackageAndTime" resultType="Integer" parameterType="map">
+          SELECT  COUNT(*)
+          FROM    re_user_channel
+          WHERE   channel_name = #{channelName,jdbcType=VARCHAR}
+          AND     package_name = #{packageName,jdbcType=VARCHAR}
+          AND     create_time BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAllUserNumByChannelPackage" resultType="Integer" parameterType="map">
+        SELECT  COUNT(*)
+        FROM    re_user_channel
+        WHERE   channel_name = #{channelName,jdbcType=VARCHAR}
+        AND     package_name = #{packageName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAllUserIdByChannelPackage" resultMap="BaseResultMap" parameterType="map">
+        SELECT  user_id
+        FROM    re_user_channel
+        WHERE   channel_name = #{channelName,jdbcType=VARCHAR}
+        AND     package_name = #{packageName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectRegisterUserByDay" resultType="Integer" parameterType="map">
+        SELECT COUNT(*)
+        FROM re_user_channel
+        WHERE instr(create_time, #{dayTime,jdbcType=VARCHAR})
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+    </select>
+
+    <select id="selectTotalRegisterUserByTime" resultType="Integer" parameterType="map">
+        SELECT COUNT(*)
+        FROM re_user_channel
+        WHERE create_time <![CDATA[ <= ]]> #{dayTime,jdbcType=VARCHAR}
+        <if test="appId != null">
+            AND app_id = #{appId,jdbcType=TINYINT}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_article_mission">
+
+    <select id="getNum" resultType="int" parameterType="map">
+        SELECT count(*)
+        FROM    re_article_mission
+        WHERE   '1'='1'
+        <if test="articleTitle != null">
+          AND     INSTR(article_title,#{articleTitle,jdbcType=VARCHAR})
+        </if>
+        <if test="articleType != null">
+            AND   article_type = #{articleType,jdbcType=TINYINT}
+        </if>
+        <if test="startMissionTime != null">
+            AND   start_mission_time >= #{startMissionTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND start_mission_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND start_mission_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND left_click_times > 0
+                    AND end_mission_time<![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND left_click_times  = 0
+                    OR  end_mission_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+            </choose>
+        </if>
+    </select>
+
+    <select id="getList" resultMap="BaseResultMap" parameterType="map">
+
+        SELECT *
+        FROM (
+        SELECT article_id, article_type, article_url, article_title,
+        article_icon, app_read_money,wx_click_money, total_click_times, left_click_times,
+        start_mission_time, end_mission_time,article_weight,'3' as article_author
+        FROM re_article_mission
+        WHERE start_mission_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+        AND left_click_times > 0
+        AND end_mission_time<![CDATA[>]]> #{nowTime,jdbcType=VARCHAR}
+
+        <if test="articleTitle != null">
+            AND     INSTR(article_title,#{articleTitle,jdbcType=VARCHAR})
+        </if>
+        <if test="articleType != null">
+            AND   article_type = #{articleType,jdbcType=TINYINT}
+        </if>
+        <if test="startMissionTime != null">
+            AND   start_mission_time >= #{startMissionTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND start_mission_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND start_mission_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND left_click_times > 0
+                    AND end_mission_time<![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND left_click_times  = 0
+                    OR  end_mission_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+            </choose>
+        </if>
+
+
+        UNION
+
+        SELECT article_id, article_type, article_url, article_title,
+        article_icon, app_read_money,wx_click_money, total_click_times, left_click_times,
+        start_mission_time, end_mission_time,article_weight,'2' as article_author
+        FROM re_article_mission
+        WHERE start_mission_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+
+        <if test="articleTitle != null">
+            AND     INSTR(article_title,#{articleTitle,jdbcType=VARCHAR})
+        </if>
+        <if test="articleType != null">
+            AND   article_type = #{articleType,jdbcType=TINYINT}
+        </if>
+        <if test="startMissionTime != null">
+            AND   start_mission_time >= #{startMissionTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND start_mission_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND start_mission_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND left_click_times > 0
+                    AND end_mission_time<![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND left_click_times  = 0
+                    OR  end_mission_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+            </choose>
+        </if>
+
+
+        UNION
+
+        SELECT article_id, article_type, article_url, article_title,
+        article_icon, app_read_money,wx_click_money, total_click_times, left_click_times,
+        start_mission_time, end_mission_time,article_weight,'1' as article_author
+        FROM re_article_mission
+        WHERE (left_click_times = 0 OR end_mission_time <![CDATA[<= ]]> #{nowTime,jdbcType=VARCHAR})
+        <if test="articleTitle != null">
+            AND     INSTR(article_title,#{articleTitle,jdbcType=VARCHAR})
+        </if>
+        <if test="articleType != null">
+            AND   article_type = #{articleType,jdbcType=TINYINT}
+        </if>
+        <if test="startMissionTime != null">
+            AND   start_mission_time >= #{startMissionTime,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            <choose>
+                <when test="status == 0">
+                    AND start_mission_time <![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 1">
+                    AND start_mission_time <![CDATA[<=]]> #{nowTime,jdbcType=VARCHAR}
+                    AND left_click_times > 0
+                    AND end_mission_time<![CDATA[>=]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+                <when test="status == 2">
+                    AND left_click_times  = 0
+                    OR  end_mission_time <![CDATA[< ]]> #{nowTime,jdbcType=VARCHAR}
+                </when>
+            </choose>
+        </if>
+
+        )t
+        ORDER BY t.article_author desc ,t.article_weight DESC
+    </select>
+
+    <select id="getArticleByIdLock" resultMap="BaseResultMap" parameterType="long">
+        <include refid="re_article_mission.SELECT_All_Column"/>
+        FROM re_article_mission
+        WHERE article_id = #{articleId,jdbcType=BIGINT}
+        FOR UPDATE
+    </select>
+
+</mapper>

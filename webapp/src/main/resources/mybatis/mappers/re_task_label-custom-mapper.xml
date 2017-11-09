@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_task_label">
+
+    <select id="getAll" resultMap="BaseResultMap">
+        <include refid="re_task_label.SELECT_All_Column"/>
+        FROM re_task_label
+        ORDER BY label_id
+    </select>
+
+</mapper>

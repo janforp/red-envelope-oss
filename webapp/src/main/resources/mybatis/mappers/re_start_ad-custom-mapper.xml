@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_start_ad">
+
+    <select id="getAllStartAds" resultMap="BaseResultMap">
+        <include refid="re_start_ad.SELECT_All_Column"/>
+        FROM    re_start_ad
+        ORDER   BY ad_id
+    </select>
+
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(*) FROM re_start_ad
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT * FROM re_start_ad ORDER BY ad_id ASC
+        LIMIT #{start,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+</mapper>

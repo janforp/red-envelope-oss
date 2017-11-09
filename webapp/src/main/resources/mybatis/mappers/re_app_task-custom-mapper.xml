@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_app_task">
+
+    <resultMap id="moduleDetail" type="com.envolope.oss.model.vo.data_statistics.ModuleDetail">
+        <id column="task_id" property="detailId" jdbcType="BIGINT"/>
+        <result column="update_time" property="detailDate" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="nickname" property="userName" jdbcType="VARCHAR"/>
+        <result column="mission_title" property="missionName" jdbcType="VARCHAR"/>
+        <result column="min_money" property="money" jdbcType="DECIMAL"/>
+        <result column="task_status" property="drawStatus" jdbcType="TINYINT"/>
+    </resultMap>
+
+
+
+    <select id="getDisPartAmount" parameterType="string" resultType="int">
+        SELECT  COUNT(DISTINCT(user_id))
+        FROM    re_app_task
+        WHERE   INSTR(from_unixtime(create_time/1000 , '%Y-%m-%d'),#{today,jdbcType=VARCHAR})
+    </select>
+
+    <select id="getTotalPartAmount" parameterType="string" resultType="int">
+        SELECT  COUNT(user_id)
+        FROM    re_app_task
+        WHERE   INSTR(from_unixtime(create_time/1000 , '%Y-%m-%d'),#{today,jdbcType=VARCHAR})
+    </select>
+
+    <select id="getDisCompAmount" parameterType="string" resultType="int">
+        SELECT  COUNT(DISTINCT(user_id))
+        FROM    re_app_task
+        WHERE   INSTR(from_unixtime(update_time/1000 , '%Y-%m-%d'),#{today,jdbcType=VARCHAR})
+        AND     task_status = 1
+    </select>
+
+    <select id="getTotalCompAmount" parameterType="string" resultType="int">
+        SELECT  COUNT(user_id)
+        FROM    re_app_task
+        WHERE   INSTR(from_unixtime(update_time/1000 , '%Y-%m-%d'),#{today,jdbcType=VARCHAR})
+        AND     task_status = 1
+    </select>
+
+
+    <select id="getCompleteDetailByDate" parameterType="string" resultMap="moduleDetail">
+        SELECT    a.task_id ,from_unixtime(a.update_time/1000 , '%Y-%m-%d %H:%i:%S') AS update_time,c.user_id, c.nickname,b.keyword as mission_title,b.money,a.task_status
+        FROM      re_app_task a
+        LEFT JOIN re_app_keywords b
+        ON        a.keyword_id = b.keyword_id
+        LEFT JOIN re_user c
+        ON        a.user_id = c.user_id
+        WHERE     INSTR(from_unixtime(a.update_time/1000 , '%Y-%m-%d'),#{today,jdbcType=VARCHAR})
+        AND       task_status = 1
+    </select>
+
+    <select id="getCompleteDetailNum" parameterType="string" resultType="int">
+        SELECT    COUNT(*)
+        FROM      re_app_task a
+        LEFT JOIN re_app_keywords b
+        ON        a.keyword_id = b.keyword_id
+        LEFT JOIN re_user c
+        ON        a.user_id = c.user_id
+        WHERE     INSTR(from_unixtime(a.update_time/1000 , '%Y-%m-%d'),#{today,jdbcType=VARCHAR})
+        AND       task_status = 1
+    </select>
+
+
+
+</mapper>

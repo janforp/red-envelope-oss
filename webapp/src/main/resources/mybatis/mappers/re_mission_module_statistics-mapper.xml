@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_mission_module_statistics">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReMissionModuleStatistics">
+        <id column="one_date" property="oneDate" jdbcType="VARCHAR"/>
+        <id column="module" property="module" jdbcType="TINYINT"/>
+        <result column="dis_part_amount" property="disPartAmount" jdbcType="INTEGER"/>
+        <result column="total_part_amount" property="totalPartAmount" jdbcType="INTEGER"/>
+        <result column="dis_comp_amount" property="disCompAmount" jdbcType="INTEGER"/>
+        <result column="total_comp_amount" property="totalCompAmount" jdbcType="INTEGER"/>
+        <result column="should_pay_money" property="shouldPayMoney" jdbcType="DECIMAL"/>
+        <result column="final_pay_money" property="finalPayMoney" jdbcType="DECIMAL"/>
+        <result column="module_desc" property="moduleDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT one_date, module, dis_part_amount, total_part_amount, dis_comp_amount, 
+        total_comp_amount, should_pay_money, final_pay_money, module_desc
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReMissionModuleStatistics">
+        <include refid="re_mission_module_statistics.SELECT_All_Column"/>
+        FROM re_mission_module_statistics
+        WHERE one_date = #{oneDate,jdbcType=VARCHAR}
+        AND module = #{module,jdbcType=TINYINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReMissionModuleStatistics">
+        DELETE FROM re_mission_module_statistics
+        WHERE one_date = #{oneDate,jdbcType=VARCHAR}
+        AND module = #{module,jdbcType=TINYINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReMissionModuleStatistics">
+        INSERT INTO re_mission_module_statistics ( one_date, 
+          module, dis_part_amount, total_part_amount, 
+          dis_comp_amount, total_comp_amount, should_pay_money, 
+          final_pay_money, module_desc )
+        VALUES ( #{oneDate,jdbcType=VARCHAR}, 
+          #{module,jdbcType=TINYINT}, #{disPartAmount,jdbcType=INTEGER}, #{totalPartAmount,jdbcType=INTEGER}, 
+          #{disCompAmount,jdbcType=INTEGER}, #{totalCompAmount,jdbcType=INTEGER}, #{shouldPayMoney,jdbcType=DECIMAL}, 
+          #{finalPayMoney,jdbcType=DECIMAL}, #{moduleDesc,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReMissionModuleStatistics">
+        INSERT INTO re_mission_module_statistics
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                one_date,
+                module,
+            <if test="disPartAmount != null">
+                dis_part_amount,
+            </if>
+            <if test="totalPartAmount != null">
+                total_part_amount,
+            </if>
+            <if test="disCompAmount != null">
+                dis_comp_amount,
+            </if>
+            <if test="totalCompAmount != null">
+                total_comp_amount,
+            </if>
+            <if test="shouldPayMoney != null">
+                should_pay_money,
+            </if>
+            <if test="finalPayMoney != null">
+                final_pay_money,
+            </if>
+            <if test="moduleDesc != null">
+                module_desc,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{oneDate,jdbcType=VARCHAR},
+                #{module,jdbcType=TINYINT},
+            <if test="disPartAmount != null">
+                #{disPartAmount,jdbcType=INTEGER},
+            </if>
+            <if test="totalPartAmount != null">
+                #{totalPartAmount,jdbcType=INTEGER},
+            </if>
+            <if test="disCompAmount != null">
+                #{disCompAmount,jdbcType=INTEGER},
+            </if>
+            <if test="totalCompAmount != null">
+                #{totalCompAmount,jdbcType=INTEGER},
+            </if>
+            <if test="shouldPayMoney != null">
+                #{shouldPayMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="finalPayMoney != null">
+                #{finalPayMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="moduleDesc != null">
+                #{moduleDesc,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_mission_module_statistics ( one_date, 
+          module, dis_part_amount, total_part_amount, 
+          dis_comp_amount, total_comp_amount, should_pay_money, 
+          final_pay_money, module_desc )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.oneDate,jdbcType=VARCHAR}, 
+            #{item.module,jdbcType=TINYINT}, #{item.disPartAmount,jdbcType=INTEGER}, #{item.totalPartAmount,jdbcType=INTEGER}, 
+            #{item.disCompAmount,jdbcType=INTEGER}, #{item.totalCompAmount,jdbcType=INTEGER}, #{item.shouldPayMoney,jdbcType=DECIMAL}, 
+            #{item.finalPayMoney,jdbcType=DECIMAL}, #{item.moduleDesc,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReMissionModuleStatistics">
+        UPDATE re_mission_module_statistics
+        <set>
+            <if test="disPartAmount != null">
+                dis_part_amount = #{disPartAmount,jdbcType=INTEGER},
+            </if>
+            <if test="totalPartAmount != null">
+                total_part_amount = #{totalPartAmount,jdbcType=INTEGER},
+            </if>
+            <if test="disCompAmount != null">
+                dis_comp_amount = #{disCompAmount,jdbcType=INTEGER},
+            </if>
+            <if test="totalCompAmount != null">
+                total_comp_amount = #{totalCompAmount,jdbcType=INTEGER},
+            </if>
+            <if test="shouldPayMoney != null">
+                should_pay_money = #{shouldPayMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="finalPayMoney != null">
+                final_pay_money = #{finalPayMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="moduleDesc != null">
+                module_desc = #{moduleDesc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE one_date = #{oneDate,jdbcType=VARCHAR}
+        AND module = #{module,jdbcType=TINYINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReMissionModuleStatistics">
+        UPDATE re_mission_module_statistics
+        SET dis_part_amount = #{disPartAmount,jdbcType=INTEGER},
+            total_part_amount = #{totalPartAmount,jdbcType=INTEGER},
+            dis_comp_amount = #{disCompAmount,jdbcType=INTEGER},
+            total_comp_amount = #{totalCompAmount,jdbcType=INTEGER},
+            should_pay_money = #{shouldPayMoney,jdbcType=DECIMAL},
+            final_pay_money = #{finalPayMoney,jdbcType=DECIMAL},
+            module_desc = #{moduleDesc,jdbcType=VARCHAR}
+        WHERE one_date = #{oneDate,jdbcType=VARCHAR}
+        AND module = #{module,jdbcType=TINYINT}
+    </update>
+</mapper>

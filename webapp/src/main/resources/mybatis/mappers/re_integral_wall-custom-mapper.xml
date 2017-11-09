@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_integral_wall">
+
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(*) FROM re_integral_wall
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT * FROM re_integral_wall ORDER BY wall_order ASC
+        LIMIT #{start,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+</mapper>

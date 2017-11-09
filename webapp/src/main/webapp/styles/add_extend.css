@@ -1,0 +1,17 @@
+.separator_line {
+    margin-top: 10px;
+    height: 1px;
+    background-color: #CCCCCC;
+}
+.table tbody td {
+    text-align: center;
+    white-space:nowrap;
+}
+.loadingPic {
+    display: none;
+}
+.user_photo {
+    border:solid 1px #ccc;
+    width: 80px;
+    height: 80px;
+}

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_code_red_detail">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReCodeRedDetail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code_id" property="codeId" jdbcType="INTEGER"/>
+        <result column="code_money" property="codeMoney" jdbcType="DECIMAL"/>
+        <result column="code_status" property="codeStatus" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, code_id, code_money, code_status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReCodeRedDetail">
+        <include refid="re_code_red_detail.SELECT_All_Column"/>
+        FROM re_code_red_detail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReCodeRedDetail">
+        DELETE FROM re_code_red_detail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReCodeRedDetail">
+        INSERT INTO re_code_red_detail ( code_id, 
+          code_money, code_status )
+        VALUES ( #{codeId,jdbcType=INTEGER}, 
+          #{codeMoney,jdbcType=DECIMAL}, #{codeStatus,jdbcType=TINYINT} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReCodeRedDetail">
+        INSERT INTO re_code_red_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="codeId != null">
+                code_id,
+            </if>
+            <if test="codeMoney != null">
+                code_money,
+            </if>
+            <if test="codeStatus != null">
+                code_status,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="codeId != null">
+                #{codeId,jdbcType=INTEGER},
+            </if>
+            <if test="codeMoney != null">
+                #{codeMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="codeStatus != null">
+                #{codeStatus,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_code_red_detail ( code_id, 
+          code_money, code_status )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.codeId,jdbcType=INTEGER}, 
+            #{item.codeMoney,jdbcType=DECIMAL}, #{item.codeStatus,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReCodeRedDetail">
+        UPDATE re_code_red_detail
+        <set>
+            <if test="codeId != null">
+                code_id = #{codeId,jdbcType=INTEGER},
+            </if>
+            <if test="codeMoney != null">
+                code_money = #{codeMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="codeStatus != null">
+                code_status = #{codeStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReCodeRedDetail">
+        UPDATE re_code_red_detail
+        SET code_id = #{codeId,jdbcType=INTEGER},
+            code_money = #{codeMoney,jdbcType=DECIMAL},
+            code_status = #{codeStatus,jdbcType=TINYINT}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

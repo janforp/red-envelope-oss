@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wxmsg_keyword_reply_rule">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.WxmsgKeywordReplyRule">
+        <id column="rule_id" property="ruleId" jdbcType="INTEGER"/>
+        <result column="rule_name" property="ruleName" jdbcType="VARCHAR"/>
+        <result column="customer_id" property="customerId" jdbcType="INTEGER"/>
+        <result column="keywords" property="keywords" jdbcType="VARCHAR"/>
+        <result column="match_mode" property="matchMode" jdbcType="TINYINT"/>
+        <result column="msg_type" property="msgType" jdbcType="VARCHAR"/>
+        <result column="msg_body" property="msgBody" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT rule_id, rule_name, customer_id, keywords, match_mode, 
+        msg_type, msg_body, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.WxmsgKeywordReplyRule">
+        <include refid="wxmsg_keyword_reply_rule.SELECT_All_Column"/>
+        FROM wxmsg_keyword_reply_rule
+        WHERE rule_id = #{ruleId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.WxmsgKeywordReplyRule">
+        DELETE FROM wxmsg_keyword_reply_rule
+        WHERE rule_id = #{ruleId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.WxmsgKeywordReplyRule">
+        INSERT INTO wxmsg_keyword_reply_rule ( rule_name, 
+          customer_id, keywords, match_mode, 
+          msg_type, msg_body, create_time )
+        VALUES ( #{ruleName,jdbcType=VARCHAR}, 
+          #{customerId,jdbcType=INTEGER}, #{keywords,jdbcType=VARCHAR}, #{matchMode,jdbcType=TINYINT}, 
+          #{msgType,jdbcType=VARCHAR}, #{msgBody,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="ruleId" resultType="int">
+            SELECT LAST_INSERT_ID() AS ruleId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.WxmsgKeywordReplyRule">
+        INSERT INTO wxmsg_keyword_reply_rule
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="ruleName != null">
+                rule_name,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="keywords != null">
+                keywords,
+            </if>
+            <if test="matchMode != null">
+                match_mode,
+            </if>
+            <if test="msgType != null">
+                msg_type,
+            </if>
+            <if test="msgBody != null">
+                msg_body,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="ruleName != null">
+                #{ruleName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="keywords != null">
+                #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="matchMode != null">
+                #{matchMode,jdbcType=TINYINT},
+            </if>
+            <if test="msgType != null">
+                #{msgType,jdbcType=VARCHAR},
+            </if>
+            <if test="msgBody != null">
+                #{msgBody,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="ruleId" resultType="int">
+            SELECT LAST_INSERT_ID() AS ruleId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO wxmsg_keyword_reply_rule ( rule_name, 
+          customer_id, keywords, match_mode, 
+          msg_type, msg_body, create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.ruleName,jdbcType=VARCHAR}, 
+            #{item.customerId,jdbcType=INTEGER}, #{item.keywords,jdbcType=VARCHAR}, #{item.matchMode,jdbcType=TINYINT}, 
+            #{item.msgType,jdbcType=VARCHAR}, #{item.msgBody,jdbcType=VARCHAR}, #{item.createTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.WxmsgKeywordReplyRule">
+        UPDATE wxmsg_keyword_reply_rule
+        <set>
+            <if test="ruleName != null">
+                rule_name = #{ruleName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="keywords != null">
+                keywords = #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="matchMode != null">
+                match_mode = #{matchMode,jdbcType=TINYINT},
+            </if>
+            <if test="msgType != null">
+                msg_type = #{msgType,jdbcType=VARCHAR},
+            </if>
+            <if test="msgBody != null">
+                msg_body = #{msgBody,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE rule_id = #{ruleId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.WxmsgKeywordReplyRule">
+        UPDATE wxmsg_keyword_reply_rule
+        SET rule_name = #{ruleName,jdbcType=VARCHAR},
+            customer_id = #{customerId,jdbcType=INTEGER},
+            keywords = #{keywords,jdbcType=VARCHAR},
+            match_mode = #{matchMode,jdbcType=TINYINT},
+            msg_type = #{msgType,jdbcType=VARCHAR},
+            msg_body = #{msgBody,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=BIGINT}
+        WHERE rule_id = #{ruleId,jdbcType=INTEGER}
+    </update>
+</mapper>

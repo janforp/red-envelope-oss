@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_welfare">
+
+    <select id="getList" resultMap="BaseResultMap" parameterType="map">
+        SELECT  a.welfare_id, a.welfare_title, a.welfare_icon, a.welfare_reward, a.welfare_type,
+                a.is_selection, a.merchant_icon, a.merchant_name, a.participants_num, a.welfare_banner,
+                a.welfare_detail, a.welfare_status,b.type_name AS create_time
+        FROM re_welfare a
+        LEFT JOIN re_welfare_type b
+        ON    a.welfare_type = b.type_id
+        WHERE '1'='1'
+        <if test="welfareTitle != null">
+            AND INSTR(welfare_title,#{welfareTitle,jdbcType=VARCHAR})
+        </if>
+        <if test="welfareType != null">
+            AND welfare_type = #{welfareType,jdbcType=TINYINT}
+        </if>
+        <if test="isSelection != null">
+            AND is_selection = #{isSelection,jdbcType=TINYINT}
+        </if>
+        <if test="merchantName != null">
+            AND INSTR(merchant_name,#{merchantName,jdbcType=VARCHAR})
+        </if>
+        ORDER BY a.update_time DESC
+    </select>
+
+    <select id="getNum" resultType="int" parameterType="map">
+        SELECT count(*)
+        FROM re_welfare
+        WHERE '1'='1'
+        <if test="welfareTitle != null">
+            AND INSTR(welfare_title,#{welfareTitle,jdbcType=VARCHAR})
+        </if>
+        <if test="welfareType != null">
+            AND welfare_type = #{welfareType,jdbcType=TINYINT}
+        </if>
+        <if test="isSelection != null">
+            AND is_selection = #{isSelection,jdbcType=TINYINT}
+        </if>
+        <if test="merchantName != null">
+            AND INSTR(merchant_name,#{merchantName,jdbcType=VARCHAR})
+        </if>
+    </select>
+
+
+</mapper>

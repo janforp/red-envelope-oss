@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user">
+
+    <select id="selectLockByUserId" resultMap="BaseResultMap" parameterType="Integer">
+        <include refid="re_user.SELECT_All_Column"/>
+        FROM re_user
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        FOR UPDATE
+    </select>
+
+    <select id="getTotalRegisterUserOfOneDay" parameterType="string" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_user
+        WHERE   from_unixtime(create_time/1000 , '%Y-%m-%d') = #{ date, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getTotalUsers" resultType="int" parameterType="string">
+        SELECT  COUNT(*)
+        FROM    re_user
+        WHERE   user_status != 0
+        AND     from_unixtime(create_time/1000 , '%Y-%m-%d') <![CDATA[ <= ]]> #{ date, jdbcType=VARCHAR}
+    </select>
+
+    <!--获取一段时间内的总注册数 -->
+    <select id="getTotalRegisterUserOfOneTimeScope" parameterType="map" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_user
+        WHERE   from_unixtime(create_time/1000 , '%Y-%m-%d') BETWEEN #{ startDate, jdbcType=VARCHAR}  AND #{ endDate, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getList" parameterType="map" resultMap="BaseResultMap">
+        SELECT  user_id,nickname, mobile,user_money, user_score,user_status,create_time
+        FROM    re_user
+        WHERE   '1'='1'
+        AND     user_status != 0
+        <if test="nickname != null">
+            AND     nickname LIKE CONCAT('%',#{nickname,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="phone != null">
+            AND     mobile   LIKE CONCAT('%',#{phone,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="start != null">
+            AND     from_unixtime(create_time/1000 , '%Y-%m-%d') <![CDATA[ >= ]]> #{start,jdbcType=VARCHAR}
+        </if>
+        <if test="end != null">
+            AND     from_unixtime(create_time/1000 , '%Y-%m-%d') <![CDATA[ <= ]]> #{end,jdbcType=VARCHAR}
+        </if>
+        ORDER   BY create_time DESC
+    </select>
+
+    <select id="getNum" parameterType="map" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_user
+        WHERE   '1'='1'
+        AND     user_status != 0
+        <if test="nickname != null">
+            AND     nickname LIKE CONCAT('%',#{nickname,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="phone != null">
+            AND     mobile   LIKE CONCAT('%',#{phone,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="start != null">
+            AND     from_unixtime(create_time/1000 , '%Y-%m-%d') <![CDATA[ >= ]]> #{start,jdbcType=VARCHAR}
+        </if>
+        <if test="end != null">
+            AND     from_unixtime(create_time/1000 , '%Y-%m-%d') <![CDATA[ <= ]]> #{end,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getRegisterNumByHour" parameterType="string" resultType="int">
+        SELECT  COUNT(*)
+        FROM    re_user
+        WHERE   from_unixtime(create_time/1000 , '%Y-%m-%d %H') LIKE #{dateHour,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="getRegisterUserToday" parameterType="string" resultMap="BaseResultMap">
+        SELECT  user_id
+        FROM    re_user
+        WHERE   from_unixtime(create_time/1000 , '%Y-%m-%d') LIKE concat('%',#{oneDate,jdbcType=VARCHAR},'%')
+        ORDER BY user_id
+    </select>
+
+</mapper>

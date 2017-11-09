@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_recommend_mission_require">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReRecommendMissionRequire">
+        <id column="require_id" property="requireId" jdbcType="BIGINT"/>
+        <result column="require_name" property="requireName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT require_id, require_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReRecommendMissionRequire">
+        <include refid="re_recommend_mission_require.SELECT_All_Column"/>
+        FROM re_recommend_mission_require
+        WHERE require_id = #{requireId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReRecommendMissionRequire">
+        DELETE FROM re_recommend_mission_require
+        WHERE require_id = #{requireId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReRecommendMissionRequire">
+        INSERT INTO re_recommend_mission_require ( require_name )
+        VALUES ( #{requireName,jdbcType=VARCHAR} )
+        <selectKey keyProperty="requireId" resultType="long">
+            SELECT LAST_INSERT_ID() AS requireId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReRecommendMissionRequire">
+        INSERT INTO re_recommend_mission_require
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="requireName != null">
+                require_name,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="requireName != null">
+                #{requireName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="requireId" resultType="long">
+            SELECT LAST_INSERT_ID() AS requireId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_recommend_mission_require ( require_name )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.requireName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReRecommendMissionRequire">
+        UPDATE re_recommend_mission_require
+        <set>
+            <if test="requireName != null">
+                require_name = #{requireName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE require_id = #{requireId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReRecommendMissionRequire">
+        UPDATE re_recommend_mission_require
+        SET require_name = #{requireName,jdbcType=VARCHAR}
+        WHERE require_id = #{requireId,jdbcType=BIGINT}
+    </update>
+</mapper>

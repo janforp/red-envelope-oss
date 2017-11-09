@@ -1,0 +1,9 @@
+<h3>服务器：<span style="font-weight: normal;">#SERVER_NAME#</span></h3>
+<h3>RequestId：<span style="font-weight: normal;">#REQUEST_ID#</span></h3>
+<h3>请求地址：<span style="font-weight: normal;">#REQUEST_URI#</span></h3>
+<h3>客户端IP：<span style="font-weight: normal;">#CLIENT_IP#</span></h3>
+<h3>请求头：<span style="font-weight: normal;">#REQUEST_HEADER#</span></h3>
+<h3>参数：<span style="font-weight: normal;">#PARAMETER#</span></h3>
+<h3>发生时间：<span style="font-weight: normal;">#OCCUR_TIME#</span></h3>
+<h3>异常信息如下：</h3>
+<div style="color:blue;font-size:14px;">#EXCEPTION#</div>

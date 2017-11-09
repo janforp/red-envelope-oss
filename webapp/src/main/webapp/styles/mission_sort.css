@@ -1,0 +1,103 @@
+.main-bd {
+    text-align: center;
+}
+
+.separator_line {
+    margin-top: 10px;
+    height: 1px;
+    background-color: #CCCCCC;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    height: 60px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+td span {
+    line-height: 60px;
+}
+
+td spanimg {
+    width: 50px;
+    height: 50px ;
+}
+
+td span .checkbox {
+    /*width: 50px;*/
+    /*margin: 20px 100px;*/
+}
+
+#deleteAlert {
+    width: 500px;
+    height: 300px;
+    background-color: white;
+    position: absolute;
+    bottom: 600px;
+    left: 900px;
+    display: none;
+}
+
+#deleteAlert .btn-info {
+    position: relative;
+    top: 150px;
+    left: 100px;;
+}
+
+#deleteAlert .btn-danger {
+    position: relative;
+    top: 150px;
+    left: 300px;;
+}
+
+#deleteAlert h1 {
+    position: relative;
+    top: 50px;
+    left: 150px;;
+}
+
+td img {
+    width: 60px;
+    height: 60px;
+}
+
+input[type=checkbox] {
+    width: 30px;
+    height: 30px;
+}
+
+
+.alertDesc{
+    width: 600px;
+    height: 600px;
+    position: fixed;
+    top:0%;
+    left: 30%;
+    background-color: white;
+    padding: 1rem;
+
+    color: black;
+    font-size: 2rem;
+
+    -moz-opacity: 0.9;
+    opacity: .90;
+    filter: alpha(opacity=90);
+    display: none;
+    z-index: 999;
+}
+
+.title{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+:focus{
+    outline: none;
+}

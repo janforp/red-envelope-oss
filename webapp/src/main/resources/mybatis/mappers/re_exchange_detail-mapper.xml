@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_exchange_detail">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReExchangeDetail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="goods_num" property="goodsNum" jdbcType="BIGINT"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="exchange_status" property="exchangeStatus" jdbcType="TINYINT"/>
+        <result column="exchange_time" property="exchangeTime" jdbcType="VARCHAR"/>
+        <result column="send_time" property="sendTime" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="card_id" property="cardId" jdbcType="VARCHAR"/>
+        <result column="card_password" property="cardPassword" jdbcType="VARCHAR"/>
+        <result column="express_number" property="expressNumber" jdbcType="VARCHAR"/>
+        <result column="invalid_time" property="invalidTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_id, goods_num, goods_name, exchange_status, 
+        exchange_time, send_time, score, card_id, card_password, 
+        express_number, invalid_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReExchangeDetail">
+        <include refid="re_exchange_detail.SELECT_All_Column"/>
+        FROM re_exchange_detail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReExchangeDetail">
+        DELETE FROM re_exchange_detail
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReExchangeDetail">
+        INSERT INTO re_exchange_detail ( user_id, 
+          goods_num, goods_name, exchange_status, 
+          exchange_time, send_time, score, 
+          card_id, card_password, express_number, 
+          invalid_time )
+        VALUES ( #{userId,jdbcType=INTEGER}, 
+          #{goodsNum,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, #{exchangeStatus,jdbcType=TINYINT}, 
+          #{exchangeTime,jdbcType=VARCHAR}, #{sendTime,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+          #{cardId,jdbcType=VARCHAR}, #{cardPassword,jdbcType=VARCHAR}, #{expressNumber,jdbcType=VARCHAR}, 
+          #{invalidTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReExchangeDetail">
+        INSERT INTO re_exchange_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="goodsNum != null">
+                goods_num,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="exchangeStatus != null">
+                exchange_status,
+            </if>
+            <if test="exchangeTime != null">
+                exchange_time,
+            </if>
+            <if test="sendTime != null">
+                send_time,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="cardId != null">
+                card_id,
+            </if>
+            <if test="cardPassword != null">
+                card_password,
+            </if>
+            <if test="expressNumber != null">
+                express_number,
+            </if>
+            <if test="invalidTime != null">
+                invalid_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsNum != null">
+                #{goodsNum,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeStatus != null">
+                #{exchangeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="exchangeTime != null">
+                #{exchangeTime,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="cardId != null">
+                #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="cardPassword != null">
+                #{cardPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="expressNumber != null">
+                #{expressNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="invalidTime != null">
+                #{invalidTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_exchange_detail ( user_id, 
+          goods_num, goods_name, exchange_status, 
+          exchange_time, send_time, score, 
+          card_id, card_password, express_number, 
+          invalid_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.userId,jdbcType=INTEGER}, 
+            #{item.goodsNum,jdbcType=BIGINT}, #{item.goodsName,jdbcType=VARCHAR}, #{item.exchangeStatus,jdbcType=TINYINT}, 
+            #{item.exchangeTime,jdbcType=VARCHAR}, #{item.sendTime,jdbcType=VARCHAR}, #{item.score,jdbcType=INTEGER}, 
+            #{item.cardId,jdbcType=VARCHAR}, #{item.cardPassword,jdbcType=VARCHAR}, #{item.expressNumber,jdbcType=VARCHAR}, 
+            #{item.invalidTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReExchangeDetail">
+        UPDATE re_exchange_detail
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsNum != null">
+                goods_num = #{goodsNum,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeStatus != null">
+                exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="exchangeTime != null">
+                exchange_time = #{exchangeTime,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="cardId != null">
+                card_id = #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="cardPassword != null">
+                card_password = #{cardPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="expressNumber != null">
+                express_number = #{expressNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="invalidTime != null">
+                invalid_time = #{invalidTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReExchangeDetail">
+        UPDATE re_exchange_detail
+        SET user_id = #{userId,jdbcType=INTEGER},
+            goods_num = #{goodsNum,jdbcType=BIGINT},
+            goods_name = #{goodsName,jdbcType=VARCHAR},
+            exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+            exchange_time = #{exchangeTime,jdbcType=VARCHAR},
+            send_time = #{sendTime,jdbcType=VARCHAR},
+            score = #{score,jdbcType=INTEGER},
+            card_id = #{cardId,jdbcType=VARCHAR},
+            card_password = #{cardPassword,jdbcType=VARCHAR},
+            express_number = #{expressNumber,jdbcType=VARCHAR},
+            invalid_time = #{invalidTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

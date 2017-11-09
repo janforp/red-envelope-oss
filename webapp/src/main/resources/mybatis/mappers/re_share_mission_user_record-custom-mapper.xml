@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_share_mission_user_record">
+
+    <select id="getDisPartAmount" parameterType="string" resultType="int">
+        SELECT COUNT(DISTINCT(user_id))
+        FROM   re_share_mission_user_record
+        WHERE  #{oneDate,jdbcType=VARCHAR} LIKE create_time
+    </select>
+
+    <select id="getTotalPartAmount" parameterType="string" resultType="int">
+        SELECT COUNT(user_id)
+        FROM   re_share_mission_user_record
+        WHERE  #{oneDate,jdbcType=VARCHAR} LIKE create_time
+    </select>
+</mapper>

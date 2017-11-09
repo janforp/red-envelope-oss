@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_mission_module_statistics">
+
+    <select id="getDateByTimeScope" parameterType="map" resultMap="BaseResultMap">
+        <include refid="re_mission_module_statistics.SELECT_All_Column"/>
+        FROM re_mission_module_statistics
+        WHERE one_date BETWEEN #{startDate,jdbcType=VARCHAR} AND #{endDate,jdbcType=VARCHAR}
+        AND module = #{module,jdbcType=TINYINT}
+        ORDER BY one_date ASC
+    </select>
+
+</mapper>

@@ -1,0 +1,5 @@
+<h3>服务器：<span style="font-weight: normal;">#SERVER_NAME#</span></h3>
+<h3>Task：<span style="font-weight: normal;">#TASK_NAME#</span></h3>
+<h3>发生时间：<span style="font-weight: normal;">#OCCUR_TIME#</span></h3>
+<h3>异常信息如下：</h3>
+<div style="color:blue;font-size:14px;">#EXCEPTION#</div>

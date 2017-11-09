@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wx_share_mission">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.WxShareMission">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="mission_title" property="missionTitle" jdbcType="VARCHAR"/>
+        <result column="mission_icon" property="missionIcon" jdbcType="VARCHAR"/>
+        <result column="mission_desc" property="missionDesc" jdbcType="VARCHAR"/>
+        <result column="prize_rate" property="prizeRate" jdbcType="TINYINT"/>
+        <result column="min_money" property="minMoney" jdbcType="INTEGER"/>
+        <result column="max_money" property="maxMoney" jdbcType="INTEGER"/>
+        <result column="prize_times" property="prizeTimes" jdbcType="TINYINT"/>
+        <result column="lottery_times" property="lotteryTimes" jdbcType="TINYINT"/>
+        <result column="total_red_num" property="totalRedNum" jdbcType="INTEGER"/>
+        <result column="left_red_num" property="leftRedNum" jdbcType="INTEGER"/>
+        <result column="verify_ip" property="verifyIp" jdbcType="TINYINT"/>
+        <result column="is_encrypted" property="isEncrypted" jdbcType="TINYINT"/>
+        <result column="merchant_secret" property="merchantSecret" jdbcType="VARCHAR"/>
+        <result column="mission_province" property="missionProvince" jdbcType="VARCHAR"/>
+        <result column="mission_city" property="missionCity" jdbcType="VARCHAR"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="share_url" property="shareUrl" jdbcType="VARCHAR"/>
+        <result column="share_title" property="shareTitle" jdbcType="VARCHAR"/>
+        <result column="share_img" property="shareImg" jdbcType="VARCHAR"/>
+        <result column="share_desc" property="shareDesc" jdbcType="VARCHAR"/>
+        <result column="share_type" property="shareType" jdbcType="VARCHAR"/>
+        <result column="share_dataurl" property="shareDataurl" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="success_img" property="successImg" jdbcType="VARCHAR"/>
+        <result column="fail_img" property="failImg" jdbcType="VARCHAR"/>
+        <result column="open_img" property="openImg" jdbcType="VARCHAR"/>
+        <result column="is_end" property="isEnd" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, mission_title, mission_icon, mission_desc, prize_rate, 
+        min_money, max_money, prize_times, lottery_times, total_red_num, 
+        left_red_num, verify_ip, is_encrypted, merchant_secret, mission_province, 
+        mission_city, merchant_name, share_url, share_title, share_img, 
+        share_desc, share_type, share_dataurl, create_time, success_img, 
+        fail_img, open_img, is_end
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.WxShareMission">
+        <include refid="wx_share_mission.SELECT_All_Column"/>
+        FROM wx_share_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.WxShareMission">
+        DELETE FROM wx_share_mission
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.WxShareMission">
+        INSERT INTO wx_share_mission ( mission_title, 
+          mission_icon, mission_desc, prize_rate, 
+          min_money, max_money, prize_times, 
+          lottery_times, total_red_num, left_red_num, 
+          verify_ip, is_encrypted, merchant_secret, 
+          mission_province, mission_city, merchant_name, 
+          share_url, share_title, share_img, 
+          share_desc, share_type, share_dataurl, 
+          create_time, success_img, fail_img, 
+          open_img, is_end )
+        VALUES ( #{missionTitle,jdbcType=VARCHAR}, 
+          #{missionIcon,jdbcType=VARCHAR}, #{missionDesc,jdbcType=VARCHAR}, #{prizeRate,jdbcType=TINYINT}, 
+          #{minMoney,jdbcType=INTEGER}, #{maxMoney,jdbcType=INTEGER}, #{prizeTimes,jdbcType=TINYINT}, 
+          #{lotteryTimes,jdbcType=TINYINT}, #{totalRedNum,jdbcType=INTEGER}, #{leftRedNum,jdbcType=INTEGER}, 
+          #{verifyIp,jdbcType=TINYINT}, #{isEncrypted,jdbcType=TINYINT}, #{merchantSecret,jdbcType=VARCHAR}, 
+          #{missionProvince,jdbcType=VARCHAR}, #{missionCity,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+          #{shareUrl,jdbcType=VARCHAR}, #{shareTitle,jdbcType=VARCHAR}, #{shareImg,jdbcType=VARCHAR}, 
+          #{shareDesc,jdbcType=VARCHAR}, #{shareType,jdbcType=VARCHAR}, #{shareDataurl,jdbcType=VARCHAR}, 
+          #{createTime,jdbcType=VARCHAR}, #{successImg,jdbcType=VARCHAR}, #{failImg,jdbcType=VARCHAR}, 
+          #{openImg,jdbcType=VARCHAR}, #{isEnd,jdbcType=TINYINT} )
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.WxShareMission">
+        INSERT INTO wx_share_mission
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionTitle != null">
+                mission_title,
+            </if>
+            <if test="missionIcon != null">
+                mission_icon,
+            </if>
+            <if test="missionDesc != null">
+                mission_desc,
+            </if>
+            <if test="prizeRate != null">
+                prize_rate,
+            </if>
+            <if test="minMoney != null">
+                min_money,
+            </if>
+            <if test="maxMoney != null">
+                max_money,
+            </if>
+            <if test="prizeTimes != null">
+                prize_times,
+            </if>
+            <if test="lotteryTimes != null">
+                lottery_times,
+            </if>
+            <if test="totalRedNum != null">
+                total_red_num,
+            </if>
+            <if test="leftRedNum != null">
+                left_red_num,
+            </if>
+            <if test="verifyIp != null">
+                verify_ip,
+            </if>
+            <if test="isEncrypted != null">
+                is_encrypted,
+            </if>
+            <if test="merchantSecret != null">
+                merchant_secret,
+            </if>
+            <if test="missionProvince != null">
+                mission_province,
+            </if>
+            <if test="missionCity != null">
+                mission_city,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="shareUrl != null">
+                share_url,
+            </if>
+            <if test="shareTitle != null">
+                share_title,
+            </if>
+            <if test="shareImg != null">
+                share_img,
+            </if>
+            <if test="shareDesc != null">
+                share_desc,
+            </if>
+            <if test="shareType != null">
+                share_type,
+            </if>
+            <if test="shareDataurl != null">
+                share_dataurl,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="successImg != null">
+                success_img,
+            </if>
+            <if test="failImg != null">
+                fail_img,
+            </if>
+            <if test="openImg != null">
+                open_img,
+            </if>
+            <if test="isEnd != null">
+                is_end,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="missionTitle != null">
+                #{missionTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="missionIcon != null">
+                #{missionIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="missionDesc != null">
+                #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeRate != null">
+                #{prizeRate,jdbcType=TINYINT},
+            </if>
+            <if test="minMoney != null">
+                #{minMoney,jdbcType=INTEGER},
+            </if>
+            <if test="maxMoney != null">
+                #{maxMoney,jdbcType=INTEGER},
+            </if>
+            <if test="prizeTimes != null">
+                #{prizeTimes,jdbcType=TINYINT},
+            </if>
+            <if test="lotteryTimes != null">
+                #{lotteryTimes,jdbcType=TINYINT},
+            </if>
+            <if test="totalRedNum != null">
+                #{totalRedNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftRedNum != null">
+                #{leftRedNum,jdbcType=INTEGER},
+            </if>
+            <if test="verifyIp != null">
+                #{verifyIp,jdbcType=TINYINT},
+            </if>
+            <if test="isEncrypted != null">
+                #{isEncrypted,jdbcType=TINYINT},
+            </if>
+            <if test="merchantSecret != null">
+                #{merchantSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="missionProvince != null">
+                #{missionProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="missionCity != null">
+                #{missionCity,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="shareUrl != null">
+                #{shareUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="shareTitle != null">
+                #{shareTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="shareImg != null">
+                #{shareImg,jdbcType=VARCHAR},
+            </if>
+            <if test="shareDesc != null">
+                #{shareDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="shareType != null">
+                #{shareType,jdbcType=VARCHAR},
+            </if>
+            <if test="shareDataurl != null">
+                #{shareDataurl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="successImg != null">
+                #{successImg,jdbcType=VARCHAR},
+            </if>
+            <if test="failImg != null">
+                #{failImg,jdbcType=VARCHAR},
+            </if>
+            <if test="openImg != null">
+                #{openImg,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                #{isEnd,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="missionId" resultType="long">
+            SELECT LAST_INSERT_ID() AS missionId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO wx_share_mission ( mission_title, 
+          mission_icon, mission_desc, prize_rate, 
+          min_money, max_money, prize_times, 
+          lottery_times, total_red_num, left_red_num, 
+          verify_ip, is_encrypted, merchant_secret, 
+          mission_province, mission_city, merchant_name, 
+          share_url, share_title, share_img, 
+          share_desc, share_type, share_dataurl, 
+          create_time, success_img, fail_img, 
+          open_img, is_end )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionTitle,jdbcType=VARCHAR}, 
+            #{item.missionIcon,jdbcType=VARCHAR}, #{item.missionDesc,jdbcType=VARCHAR}, #{item.prizeRate,jdbcType=TINYINT}, 
+            #{item.minMoney,jdbcType=INTEGER}, #{item.maxMoney,jdbcType=INTEGER}, #{item.prizeTimes,jdbcType=TINYINT}, 
+            #{item.lotteryTimes,jdbcType=TINYINT}, #{item.totalRedNum,jdbcType=INTEGER}, #{item.leftRedNum,jdbcType=INTEGER}, 
+            #{item.verifyIp,jdbcType=TINYINT}, #{item.isEncrypted,jdbcType=TINYINT}, #{item.merchantSecret,jdbcType=VARCHAR}, 
+            #{item.missionProvince,jdbcType=VARCHAR}, #{item.missionCity,jdbcType=VARCHAR}, #{item.merchantName,jdbcType=VARCHAR}, 
+            #{item.shareUrl,jdbcType=VARCHAR}, #{item.shareTitle,jdbcType=VARCHAR}, #{item.shareImg,jdbcType=VARCHAR}, 
+            #{item.shareDesc,jdbcType=VARCHAR}, #{item.shareType,jdbcType=VARCHAR}, #{item.shareDataurl,jdbcType=VARCHAR}, 
+            #{item.createTime,jdbcType=VARCHAR}, #{item.successImg,jdbcType=VARCHAR}, #{item.failImg,jdbcType=VARCHAR}, 
+            #{item.openImg,jdbcType=VARCHAR}, #{item.isEnd,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.WxShareMission">
+        UPDATE wx_share_mission
+        <set>
+            <if test="missionTitle != null">
+                mission_title = #{missionTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="missionIcon != null">
+                mission_icon = #{missionIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="missionDesc != null">
+                mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeRate != null">
+                prize_rate = #{prizeRate,jdbcType=TINYINT},
+            </if>
+            <if test="minMoney != null">
+                min_money = #{minMoney,jdbcType=INTEGER},
+            </if>
+            <if test="maxMoney != null">
+                max_money = #{maxMoney,jdbcType=INTEGER},
+            </if>
+            <if test="prizeTimes != null">
+                prize_times = #{prizeTimes,jdbcType=TINYINT},
+            </if>
+            <if test="lotteryTimes != null">
+                lottery_times = #{lotteryTimes,jdbcType=TINYINT},
+            </if>
+            <if test="totalRedNum != null">
+                total_red_num = #{totalRedNum,jdbcType=INTEGER},
+            </if>
+            <if test="leftRedNum != null">
+                left_red_num = #{leftRedNum,jdbcType=INTEGER},
+            </if>
+            <if test="verifyIp != null">
+                verify_ip = #{verifyIp,jdbcType=TINYINT},
+            </if>
+            <if test="isEncrypted != null">
+                is_encrypted = #{isEncrypted,jdbcType=TINYINT},
+            </if>
+            <if test="merchantSecret != null">
+                merchant_secret = #{merchantSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="missionProvince != null">
+                mission_province = #{missionProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="missionCity != null">
+                mission_city = #{missionCity,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="shareUrl != null">
+                share_url = #{shareUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="shareTitle != null">
+                share_title = #{shareTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="shareImg != null">
+                share_img = #{shareImg,jdbcType=VARCHAR},
+            </if>
+            <if test="shareDesc != null">
+                share_desc = #{shareDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="shareType != null">
+                share_type = #{shareType,jdbcType=VARCHAR},
+            </if>
+            <if test="shareDataurl != null">
+                share_dataurl = #{shareDataurl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="successImg != null">
+                success_img = #{successImg,jdbcType=VARCHAR},
+            </if>
+            <if test="failImg != null">
+                fail_img = #{failImg,jdbcType=VARCHAR},
+            </if>
+            <if test="openImg != null">
+                open_img = #{openImg,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnd != null">
+                is_end = #{isEnd,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.WxShareMission">
+        UPDATE wx_share_mission
+        SET mission_title = #{missionTitle,jdbcType=VARCHAR},
+            mission_icon = #{missionIcon,jdbcType=VARCHAR},
+            mission_desc = #{missionDesc,jdbcType=VARCHAR},
+            prize_rate = #{prizeRate,jdbcType=TINYINT},
+            min_money = #{minMoney,jdbcType=INTEGER},
+            max_money = #{maxMoney,jdbcType=INTEGER},
+            prize_times = #{prizeTimes,jdbcType=TINYINT},
+            lottery_times = #{lotteryTimes,jdbcType=TINYINT},
+            total_red_num = #{totalRedNum,jdbcType=INTEGER},
+            left_red_num = #{leftRedNum,jdbcType=INTEGER},
+            verify_ip = #{verifyIp,jdbcType=TINYINT},
+            is_encrypted = #{isEncrypted,jdbcType=TINYINT},
+            merchant_secret = #{merchantSecret,jdbcType=VARCHAR},
+            mission_province = #{missionProvince,jdbcType=VARCHAR},
+            mission_city = #{missionCity,jdbcType=VARCHAR},
+            merchant_name = #{merchantName,jdbcType=VARCHAR},
+            share_url = #{shareUrl,jdbcType=VARCHAR},
+            share_title = #{shareTitle,jdbcType=VARCHAR},
+            share_img = #{shareImg,jdbcType=VARCHAR},
+            share_desc = #{shareDesc,jdbcType=VARCHAR},
+            share_type = #{shareType,jdbcType=VARCHAR},
+            share_dataurl = #{shareDataurl,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            success_img = #{successImg,jdbcType=VARCHAR},
+            fail_img = #{failImg,jdbcType=VARCHAR},
+            open_img = #{openImg,jdbcType=VARCHAR},
+            is_end = #{isEnd,jdbcType=TINYINT}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+    </update>
+</mapper>

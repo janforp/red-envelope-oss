@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_discover_banner">
+
+
+    <select id="getAllBanners" resultMap="BaseResultMap">
+        <include refid="re_discover_banner.SELECT_All_Column"/>
+        FROM re_discover_banner
+        ORDER BY banner_order ASC
+    </select>
+
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(*) FROM re_discover_banner
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT * FROM re_discover_banner ORDER BY banner_order ASC
+        LIMIT #{start,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>

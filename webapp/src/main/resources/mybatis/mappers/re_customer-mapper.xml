@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_customer">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReCustomer">
+        <id column="customer_id" property="customerId" jdbcType="INTEGER"/>
+        <result column="customer_type" property="customerType" jdbcType="TINYINT"/>
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR"/>
+        <result column="customer_img" property="customerImg" jdbcType="VARCHAR"/>
+        <result column="customer_secret" property="customerSecret" jdbcType="VARCHAR"/>
+        <result column="customer_wx" property="customerWx" jdbcType="VARCHAR"/>
+        <result column="customer_appid" property="customerAppid" jdbcType="VARCHAR"/>
+        <result column="customer_appsecret" property="customerAppsecret" jdbcType="VARCHAR"/>
+        <result column="customer_token" property="customerToken" jdbcType="VARCHAR"/>
+        <result column="customer_aeskey" property="customerAeskey" jdbcType="VARCHAR"/>
+        <result column="customer_sendtype" property="customerSendtype" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="INTEGER"/>
+        <result column="mode" property="mode" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT customer_id, customer_type, customer_name, customer_img, customer_secret, 
+        customer_wx, customer_appid, customer_appsecret, customer_token, customer_aeskey, 
+        customer_sendtype, create_time, mode
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReCustomer">
+        <include refid="re_customer.SELECT_All_Column"/>
+        FROM re_customer
+        WHERE customer_id = #{customerId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReCustomer">
+        DELETE FROM re_customer
+        WHERE customer_id = #{customerId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReCustomer">
+        INSERT INTO re_customer ( customer_type, 
+          customer_name, customer_img, customer_secret, 
+          customer_wx, customer_appid, customer_appsecret, 
+          customer_token, customer_aeskey, customer_sendtype, 
+          create_time, mode )
+        VALUES ( #{customerType,jdbcType=TINYINT}, 
+          #{customerName,jdbcType=VARCHAR}, #{customerImg,jdbcType=VARCHAR}, #{customerSecret,jdbcType=VARCHAR}, 
+          #{customerWx,jdbcType=VARCHAR}, #{customerAppid,jdbcType=VARCHAR}, #{customerAppsecret,jdbcType=VARCHAR}, 
+          #{customerToken,jdbcType=VARCHAR}, #{customerAeskey,jdbcType=VARCHAR}, #{customerSendtype,jdbcType=TINYINT}, 
+          #{createTime,jdbcType=INTEGER}, #{mode,jdbcType=TINYINT} )
+        <selectKey keyProperty="customerId" resultType="int">
+            SELECT LAST_INSERT_ID() AS customerId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReCustomer">
+        INSERT INTO re_customer
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="customerType != null">
+                customer_type,
+            </if>
+            <if test="customerName != null">
+                customer_name,
+            </if>
+            <if test="customerImg != null">
+                customer_img,
+            </if>
+            <if test="customerSecret != null">
+                customer_secret,
+            </if>
+            <if test="customerWx != null">
+                customer_wx,
+            </if>
+            <if test="customerAppid != null">
+                customer_appid,
+            </if>
+            <if test="customerAppsecret != null">
+                customer_appsecret,
+            </if>
+            <if test="customerToken != null">
+                customer_token,
+            </if>
+            <if test="customerAeskey != null">
+                customer_aeskey,
+            </if>
+            <if test="customerSendtype != null">
+                customer_sendtype,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="mode != null">
+                mode,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="customerType != null">
+                #{customerType,jdbcType=TINYINT},
+            </if>
+            <if test="customerName != null">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerImg != null">
+                #{customerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSecret != null">
+                #{customerSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="customerWx != null">
+                #{customerWx,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAppid != null">
+                #{customerAppid,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAppsecret != null">
+                #{customerAppsecret,jdbcType=VARCHAR},
+            </if>
+            <if test="customerToken != null">
+                #{customerToken,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAeskey != null">
+                #{customerAeskey,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSendtype != null">
+                #{customerSendtype,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=INTEGER},
+            </if>
+            <if test="mode != null">
+                #{mode,jdbcType=TINYINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="customerId" resultType="int">
+            SELECT LAST_INSERT_ID() AS customerId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_customer ( customer_type, 
+          customer_name, customer_img, customer_secret, 
+          customer_wx, customer_appid, customer_appsecret, 
+          customer_token, customer_aeskey, customer_sendtype, 
+          create_time, mode )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.customerType,jdbcType=TINYINT}, 
+            #{item.customerName,jdbcType=VARCHAR}, #{item.customerImg,jdbcType=VARCHAR}, #{item.customerSecret,jdbcType=VARCHAR}, 
+            #{item.customerWx,jdbcType=VARCHAR}, #{item.customerAppid,jdbcType=VARCHAR}, #{item.customerAppsecret,jdbcType=VARCHAR}, 
+            #{item.customerToken,jdbcType=VARCHAR}, #{item.customerAeskey,jdbcType=VARCHAR}, #{item.customerSendtype,jdbcType=TINYINT}, 
+            #{item.createTime,jdbcType=INTEGER}, #{item.mode,jdbcType=TINYINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReCustomer">
+        UPDATE re_customer
+        <set>
+            <if test="customerType != null">
+                customer_type = #{customerType,jdbcType=TINYINT},
+            </if>
+            <if test="customerName != null">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerImg != null">
+                customer_img = #{customerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSecret != null">
+                customer_secret = #{customerSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="customerWx != null">
+                customer_wx = #{customerWx,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAppid != null">
+                customer_appid = #{customerAppid,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAppsecret != null">
+                customer_appsecret = #{customerAppsecret,jdbcType=VARCHAR},
+            </if>
+            <if test="customerToken != null">
+                customer_token = #{customerToken,jdbcType=VARCHAR},
+            </if>
+            <if test="customerAeskey != null">
+                customer_aeskey = #{customerAeskey,jdbcType=VARCHAR},
+            </if>
+            <if test="customerSendtype != null">
+                customer_sendtype = #{customerSendtype,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=INTEGER},
+            </if>
+            <if test="mode != null">
+                mode = #{mode,jdbcType=TINYINT},
+            </if>
+        </set>
+        WHERE customer_id = #{customerId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReCustomer">
+        UPDATE re_customer
+        SET customer_type = #{customerType,jdbcType=TINYINT},
+            customer_name = #{customerName,jdbcType=VARCHAR},
+            customer_img = #{customerImg,jdbcType=VARCHAR},
+            customer_secret = #{customerSecret,jdbcType=VARCHAR},
+            customer_wx = #{customerWx,jdbcType=VARCHAR},
+            customer_appid = #{customerAppid,jdbcType=VARCHAR},
+            customer_appsecret = #{customerAppsecret,jdbcType=VARCHAR},
+            customer_token = #{customerToken,jdbcType=VARCHAR},
+            customer_aeskey = #{customerAeskey,jdbcType=VARCHAR},
+            customer_sendtype = #{customerSendtype,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=INTEGER},
+            mode = #{mode,jdbcType=TINYINT}
+        WHERE customer_id = #{customerId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--&lt;!&ndash; 定时器开关 开始 &ndash;&gt;-->
+    <!--<task:annotation-driven/>-->
+    <!--&lt;!&ndash; 定时器开关 结束 &ndash;&gt;-->
+
+    <!--&lt;!&ndash;初始化并启动所有Task&ndash;&gt;-->
+    <!--<bean scope="singleton" class="org.craigq.quartz.TaskContextLoader"/>-->
+
+    <!--<bean id="taskInterceptor" class="org.craigq.quartz.intercept.TaskInterceptor" scope="prototype"/>-->
+    <!--<aop:config proxy-target-class="true">-->
+        <!--<aop:pointcut id="taskOperation" expression="execution(* com.envolope.oss.task..*Task.run()))"/>-->
+        <!--<aop:advisor advice-ref="taskInterceptor" pointcut-ref="taskOperation"/>-->
+    <!--</aop:config>-->
+</beans>

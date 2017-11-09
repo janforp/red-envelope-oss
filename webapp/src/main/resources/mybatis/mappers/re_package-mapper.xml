@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_package">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.RePackage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="platform" property="platform" jdbcType="TINYINT"/>
+        <result column="package_name" property="packageName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, platform, package_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.RePackage">
+        <include refid="re_package.SELECT_All_Column"/>
+        FROM re_package
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.RePackage">
+        DELETE FROM re_package
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.RePackage">
+        INSERT INTO re_package ( platform, 
+          package_name )
+        VALUES ( #{platform,jdbcType=TINYINT}, 
+          #{packageName,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.RePackage">
+        INSERT INTO re_package
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="platform != null">
+                platform,
+            </if>
+            <if test="packageName != null">
+                package_name,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="platform != null">
+                #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="packageName != null">
+                #{packageName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_package ( platform, 
+          package_name )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.platform,jdbcType=TINYINT}, 
+            #{item.packageName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.RePackage">
+        UPDATE re_package
+        <set>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="packageName != null">
+                package_name = #{packageName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.RePackage">
+        UPDATE re_package
+        SET platform = #{platform,jdbcType=TINYINT},
+            package_name = #{packageName,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

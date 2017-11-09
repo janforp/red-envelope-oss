@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_user_data_statistics">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReUserDataStatistics">
+        <id column="package_name" property="packageName" jdbcType="VARCHAR"/>
+        <id column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <id column="data_time" property="dataTime" jdbcType="VARCHAR"/>
+        <result column="today_user" property="todayUser" jdbcType="INTEGER"/>
+        <result column="total_user" property="totalUser" jdbcType="INTEGER"/>
+        <result column="today_user_give_coin" property="todayUserGiveCoin" jdbcType="INTEGER"/>
+        <result column="today_total_give_coin" property="todayTotalGiveCoin" jdbcType="INTEGER"/>
+        <result column="today_user_expend_coin" property="todayUserExpendCoin" jdbcType="INTEGER"/>
+        <result column="today_total_expend_coin" property="todayTotalExpendCoin" jdbcType="INTEGER"/>
+        <result column="today_user_give_money" property="todayUserGiveMoney" jdbcType="DECIMAL"/>
+        <result column="today_total_give_money" property="todayTotalGiveMoney" jdbcType="DECIMAL"/>
+        <result column="today_user_expend_money" property="todayUserExpendMoney" jdbcType="DECIMAL"/>
+        <result column="today_total_expend_money" property="todayTotalExpendMoney" jdbcType="DECIMAL"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT package_name, channel_name, data_time, today_user, total_user, 
+        today_user_give_coin, today_total_give_coin, today_user_expend_coin, today_total_expend_coin, today_user_give_money, 
+        today_total_give_money, today_user_expend_money, today_total_expend_money
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReUserDataStatistics">
+        <include refid="re_user_data_statistics.SELECT_All_Column"/>
+        FROM re_user_data_statistics
+        WHERE package_name = #{packageName,jdbcType=VARCHAR}
+        AND channel_name = #{channelName,jdbcType=VARCHAR}
+        AND data_time = #{dataTime,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReUserDataStatistics">
+        DELETE FROM re_user_data_statistics
+        WHERE package_name = #{packageName,jdbcType=VARCHAR}
+        AND channel_name = #{channelName,jdbcType=VARCHAR}
+        AND data_time = #{dataTime,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReUserDataStatistics">
+        INSERT INTO re_user_data_statistics ( package_name, 
+          channel_name, data_time, today_user, 
+          total_user, today_user_give_coin, today_total_give_coin, 
+          today_user_expend_coin, today_total_expend_coin, today_user_give_money, 
+          today_total_give_money, today_user_expend_money, today_total_expend_money )
+        VALUES ( #{packageName,jdbcType=VARCHAR}, 
+          #{channelName,jdbcType=VARCHAR}, #{dataTime,jdbcType=VARCHAR}, #{todayUser,jdbcType=INTEGER}, 
+          #{totalUser,jdbcType=INTEGER}, #{todayUserGiveCoin,jdbcType=INTEGER}, #{todayTotalGiveCoin,jdbcType=INTEGER}, 
+          #{todayUserExpendCoin,jdbcType=INTEGER}, #{todayTotalExpendCoin,jdbcType=INTEGER}, #{todayUserGiveMoney,jdbcType=DECIMAL}, 
+          #{todayTotalGiveMoney,jdbcType=DECIMAL}, #{todayUserExpendMoney,jdbcType=DECIMAL}, #{todayTotalExpendMoney,jdbcType=DECIMAL} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReUserDataStatistics">
+        INSERT INTO re_user_data_statistics
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                package_name,
+                channel_name,
+                data_time,
+            <if test="todayUser != null">
+                today_user,
+            </if>
+            <if test="totalUser != null">
+                total_user,
+            </if>
+            <if test="todayUserGiveCoin != null">
+                today_user_give_coin,
+            </if>
+            <if test="todayTotalGiveCoin != null">
+                today_total_give_coin,
+            </if>
+            <if test="todayUserExpendCoin != null">
+                today_user_expend_coin,
+            </if>
+            <if test="todayTotalExpendCoin != null">
+                today_total_expend_coin,
+            </if>
+            <if test="todayUserGiveMoney != null">
+                today_user_give_money,
+            </if>
+            <if test="todayTotalGiveMoney != null">
+                today_total_give_money,
+            </if>
+            <if test="todayUserExpendMoney != null">
+                today_user_expend_money,
+            </if>
+            <if test="todayTotalExpendMoney != null">
+                today_total_expend_money,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{packageName,jdbcType=VARCHAR},
+                #{channelName,jdbcType=VARCHAR},
+                #{dataTime,jdbcType=VARCHAR},
+            <if test="todayUser != null">
+                #{todayUser,jdbcType=INTEGER},
+            </if>
+            <if test="totalUser != null">
+                #{totalUser,jdbcType=INTEGER},
+            </if>
+            <if test="todayUserGiveCoin != null">
+                #{todayUserGiveCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayTotalGiveCoin != null">
+                #{todayTotalGiveCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayUserExpendCoin != null">
+                #{todayUserExpendCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayTotalExpendCoin != null">
+                #{todayTotalExpendCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayUserGiveMoney != null">
+                #{todayUserGiveMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayTotalGiveMoney != null">
+                #{todayTotalGiveMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayUserExpendMoney != null">
+                #{todayUserExpendMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayTotalExpendMoney != null">
+                #{todayTotalExpendMoney,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_user_data_statistics ( package_name, 
+          channel_name, data_time, today_user, 
+          total_user, today_user_give_coin, today_total_give_coin, 
+          today_user_expend_coin, today_total_expend_coin, today_user_give_money, 
+          today_total_give_money, today_user_expend_money, today_total_expend_money )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.packageName,jdbcType=VARCHAR}, 
+            #{item.channelName,jdbcType=VARCHAR}, #{item.dataTime,jdbcType=VARCHAR}, #{item.todayUser,jdbcType=INTEGER}, 
+            #{item.totalUser,jdbcType=INTEGER}, #{item.todayUserGiveCoin,jdbcType=INTEGER}, #{item.todayTotalGiveCoin,jdbcType=INTEGER}, 
+            #{item.todayUserExpendCoin,jdbcType=INTEGER}, #{item.todayTotalExpendCoin,jdbcType=INTEGER}, #{item.todayUserGiveMoney,jdbcType=DECIMAL}, 
+            #{item.todayTotalGiveMoney,jdbcType=DECIMAL}, #{item.todayUserExpendMoney,jdbcType=DECIMAL}, #{item.todayTotalExpendMoney,jdbcType=DECIMAL}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReUserDataStatistics">
+        UPDATE re_user_data_statistics
+        <set>
+            <if test="todayUser != null">
+                today_user = #{todayUser,jdbcType=INTEGER},
+            </if>
+            <if test="totalUser != null">
+                total_user = #{totalUser,jdbcType=INTEGER},
+            </if>
+            <if test="todayUserGiveCoin != null">
+                today_user_give_coin = #{todayUserGiveCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayTotalGiveCoin != null">
+                today_total_give_coin = #{todayTotalGiveCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayUserExpendCoin != null">
+                today_user_expend_coin = #{todayUserExpendCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayTotalExpendCoin != null">
+                today_total_expend_coin = #{todayTotalExpendCoin,jdbcType=INTEGER},
+            </if>
+            <if test="todayUserGiveMoney != null">
+                today_user_give_money = #{todayUserGiveMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayTotalGiveMoney != null">
+                today_total_give_money = #{todayTotalGiveMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayUserExpendMoney != null">
+                today_user_expend_money = #{todayUserExpendMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="todayTotalExpendMoney != null">
+                today_total_expend_money = #{todayTotalExpendMoney,jdbcType=DECIMAL},
+            </if>
+        </set>
+        WHERE package_name = #{packageName,jdbcType=VARCHAR}
+        AND channel_name = #{channelName,jdbcType=VARCHAR}
+        AND data_time = #{dataTime,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReUserDataStatistics">
+        UPDATE re_user_data_statistics
+        SET today_user = #{todayUser,jdbcType=INTEGER},
+            total_user = #{totalUser,jdbcType=INTEGER},
+            today_user_give_coin = #{todayUserGiveCoin,jdbcType=INTEGER},
+            today_total_give_coin = #{todayTotalGiveCoin,jdbcType=INTEGER},
+            today_user_expend_coin = #{todayUserExpendCoin,jdbcType=INTEGER},
+            today_total_expend_coin = #{todayTotalExpendCoin,jdbcType=INTEGER},
+            today_user_give_money = #{todayUserGiveMoney,jdbcType=DECIMAL},
+            today_total_give_money = #{todayTotalGiveMoney,jdbcType=DECIMAL},
+            today_user_expend_money = #{todayUserExpendMoney,jdbcType=DECIMAL},
+            today_total_expend_money = #{todayTotalExpendMoney,jdbcType=DECIMAL}
+        WHERE package_name = #{packageName,jdbcType=VARCHAR}
+        AND channel_name = #{channelName,jdbcType=VARCHAR}
+        AND data_time = #{dataTime,jdbcType=VARCHAR}
+    </update>
+</mapper>

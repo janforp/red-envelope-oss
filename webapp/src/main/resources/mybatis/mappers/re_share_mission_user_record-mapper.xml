@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_share_mission_user_record">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReShareMissionUserRecord">
+        <id column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="short_url" property="shortUrl" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT mission_id, user_id, short_url, update_time, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReShareMissionUserRecord">
+        <include refid="re_share_mission_user_record.SELECT_All_Column"/>
+        FROM re_share_mission_user_record
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReShareMissionUserRecord">
+        DELETE FROM re_share_mission_user_record
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReShareMissionUserRecord">
+        INSERT INTO re_share_mission_user_record ( mission_id, 
+          user_id, short_url, update_time, 
+          create_time )
+        VALUES ( #{missionId,jdbcType=BIGINT}, 
+          #{userId,jdbcType=INTEGER}, #{shortUrl,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+          #{createTime,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReShareMissionUserRecord">
+        INSERT INTO re_share_mission_user_record
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                mission_id,
+                user_id,
+            <if test="shortUrl != null">
+                short_url,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{missionId,jdbcType=BIGINT},
+                #{userId,jdbcType=INTEGER},
+            <if test="shortUrl != null">
+                #{shortUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_share_mission_user_record ( mission_id, 
+          user_id, short_url, update_time, 
+          create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.missionId,jdbcType=BIGINT}, 
+            #{item.userId,jdbcType=INTEGER}, #{item.shortUrl,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=VARCHAR}, 
+            #{item.createTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReShareMissionUserRecord">
+        UPDATE re_share_mission_user_record
+        <set>
+            <if test="shortUrl != null">
+                short_url = #{shortUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReShareMissionUserRecord">
+        UPDATE re_share_mission_user_record
+        SET short_url = #{shortUrl,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR}
+        WHERE mission_id = #{missionId,jdbcType=BIGINT}
+        AND user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wx_share_red_detail">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.WxShareRedDetail">
+        <id column="red_id" property="redId" jdbcType="BIGINT"/>
+        <result column="flag" property="flag" jdbcType="TINYINT"/>
+        <result column="mission_id" property="missionId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="INTEGER"/>
+        <result column="red_status" property="redStatus" jdbcType="TINYINT"/>
+        <result column="receive_time" property="receiveTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT red_id, flag, mission_id, user_id, money, 
+        red_status, receive_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.WxShareRedDetail">
+        <include refid="wx_share_red_detail.SELECT_All_Column"/>
+        FROM wx_share_red_detail
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.WxShareRedDetail">
+        DELETE FROM wx_share_red_detail
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.WxShareRedDetail">
+        INSERT INTO wx_share_red_detail ( flag, 
+          mission_id, user_id, money, 
+          red_status, receive_time )
+        VALUES ( #{flag,jdbcType=TINYINT}, 
+          #{missionId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{money,jdbcType=INTEGER}, 
+          #{redStatus,jdbcType=TINYINT}, #{receiveTime,jdbcType=VARCHAR} )
+        <selectKey keyProperty="redId" resultType="long">
+            SELECT LAST_INSERT_ID() AS redId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.WxShareRedDetail">
+        INSERT INTO wx_share_red_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="missionId != null">
+                mission_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="redStatus != null">
+                red_status,
+            </if>
+            <if test="receiveTime != null">
+                receive_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="flag != null">
+                #{flag,jdbcType=TINYINT},
+            </if>
+            <if test="missionId != null">
+                #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=INTEGER},
+            </if>
+            <if test="redStatus != null">
+                #{redStatus,jdbcType=TINYINT},
+            </if>
+            <if test="receiveTime != null">
+                #{receiveTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="redId" resultType="long">
+            SELECT LAST_INSERT_ID() AS redId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO wx_share_red_detail ( flag, 
+          mission_id, user_id, money, 
+          red_status, receive_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.flag,jdbcType=TINYINT}, 
+            #{item.missionId,jdbcType=BIGINT}, #{item.userId,jdbcType=BIGINT}, #{item.money,jdbcType=INTEGER}, 
+            #{item.redStatus,jdbcType=TINYINT}, #{item.receiveTime,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.WxShareRedDetail">
+        UPDATE wx_share_red_detail
+        <set>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=TINYINT},
+            </if>
+            <if test="missionId != null">
+                mission_id = #{missionId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=INTEGER},
+            </if>
+            <if test="redStatus != null">
+                red_status = #{redStatus,jdbcType=TINYINT},
+            </if>
+            <if test="receiveTime != null">
+                receive_time = #{receiveTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.WxShareRedDetail">
+        UPDATE wx_share_red_detail
+        SET flag = #{flag,jdbcType=TINYINT},
+            mission_id = #{missionId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=BIGINT},
+            money = #{money,jdbcType=INTEGER},
+            red_status = #{redStatus,jdbcType=TINYINT},
+            receive_time = #{receiveTime,jdbcType=VARCHAR}
+        WHERE red_id = #{redId,jdbcType=BIGINT}
+    </update>
+</mapper>

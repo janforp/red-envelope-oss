@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_channel">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReChannel">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="platform" property="platform" jdbcType="TINYINT"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, platform, channel_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReChannel">
+        <include refid="re_channel.SELECT_All_Column"/>
+        FROM re_channel
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReChannel">
+        DELETE FROM re_channel
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReChannel">
+        INSERT INTO re_channel ( platform, 
+          channel_name )
+        VALUES ( #{platform,jdbcType=TINYINT}, 
+          #{channelName,jdbcType=VARCHAR} )
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReChannel">
+        INSERT INTO re_channel
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="platform != null">
+                platform,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="platform != null">
+                #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_channel ( platform, 
+          channel_name )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.platform,jdbcType=TINYINT}, 
+            #{item.channelName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReChannel">
+        UPDATE re_channel
+        <set>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=TINYINT},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReChannel">
+        UPDATE re_channel
+        SET platform = #{platform,jdbcType=TINYINT},
+            channel_name = #{channelName,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.orgwy_blocked_device-mapper.xml//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <mappers>
+        <!--<mapper resource="mybatis/mappers/*-mapper.xml"/>-->
+        <!--<mapper resource="mybatis/mappers/*-custom-mapper.xml"/>-->
+        <mapper resource="mybatis/mappers/oss_menu_module-mapper.xml"/>
+        <mapper resource="mybatis/mappers/oss_menu_module-custom-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/oss_menu_function-mapper.xml"/>
+        <mapper resource="mybatis/mappers/oss_menu_function-custom-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/oss_role-mapper.xml"/>
+        <mapper resource="mybatis/mappers/oss_role-custom-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/oss_rel_role_menu_function-mapper.xml"/>
+        <mapper resource="mybatis/mappers/oss_rel_role_menu_function-custom-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/oss_admin-mapper.xml"/>
+        <mapper resource="mybatis/mappers/oss_admin-custom-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_customer-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_customer-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_customer_extend-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_customer_extend-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_customer_envelope-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_customer_envelope-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_customer_extend_step-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_customer_extend_step-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user_record-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user_record-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_access_token-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_access_token-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/wxmsg_keyword_reply_rule-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/wxmsg_keyword_reply_rule-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_mission-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_mission-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_mission_sort-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_mission_sort-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_banner-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_banner-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_navigation-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_navigation-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_discover-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_discover-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_start_ad-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_start_ad-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_sort-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_sort-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_fixed_red-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_fixed_red-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_sort_red-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_sort_red-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_withdraw_sort-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_withdraw_sort-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_withdraw_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_withdraw_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_code_red-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_code_red-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_code_red_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_code_red_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_exchange_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_exchange_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_index_sort-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_index_sort-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_address-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_address-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user_commission_withdraw-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user_commission_withdraw-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_account_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_account_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user_commission-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user_commission-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user_commission_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user_commission_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_channel-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_channel-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_package-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_package-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_score_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_score_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user_channel-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user_channel-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_package_channel-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_package_channel-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_discover_banner-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_discover_banner-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_coin_item-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_coin_item-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_integral_wall-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_integral_wall-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_app-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_app-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_app_market-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_app_market-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_app_keywords-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_app_keywords-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_task_label-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_task_label-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/wx_share_mission-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/wx_share_mission-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/wx_share_red_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/wx_share_red_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_recommend_mission-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_recommend_mission-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_recommend_mission_step-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_recommend_mission_step-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_recommend_mission_task-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_recommend_mission_task-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_withdraw_bind_zfb-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_withdraw_bind_zfb-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_recommend_mission_require-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_recommend_mission_require-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_recommend_task-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_recommend_task-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_code_exchange_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_code_exchange_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_receive_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_receive_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_share_mission-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_share_mission-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_share_mission_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_share_mission_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_password_red-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_password_red-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_app_task-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_app_task-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user_login_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user_login_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_mission_module_statistics-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_mission_module_statistics-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_newcomer_mission-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_newcomer_mission-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_newcomer_mission_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_newcomer_mission_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_share_mission_user_record-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_share_mission_user_record-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_password_red_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_password_red_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_user_data_statistics-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_user_data_statistics-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_andriod_integral_wall-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_andriod_integral_wall-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_andriod_user_task-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_andriod_user_task-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_article_ad-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_article_ad-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_article_click_detail-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_article_click_detail-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_article_mission-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_article_mission-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_welfare-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_welfare-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_welfare_type-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_welfare_type-mapper.xml"/>
+
+        <mapper resource="mybatis/mappers/re_recommend_mission_type-custom-mapper.xml"/>
+        <mapper resource="mybatis/mappers/re_recommend_mission_type-mapper.xml"/>
+
+    </mappers>
+</configuration>

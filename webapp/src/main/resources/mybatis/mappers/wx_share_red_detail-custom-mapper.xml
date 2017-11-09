@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wx_share_red_detail">
+
+    <select id="getLeftNumByMissionId" resultType="int" parameterType="long">
+        SELECT  count(*)
+        FROM    wx_share_red_detail
+        WHERE   mission_id = #{missionId,jdbcType=BIGINT}
+        AND     red_status = 0
+    </select>
+</mapper>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="re_sort_red">
+    <resultMap id="BaseResultMap" type="com.envolope.oss.model.ReSortRed">
+        <id column="red_id" property="redId" jdbcType="INTEGER"/>
+        <result column="red_name" property="redName" jdbcType="VARCHAR"/>
+        <result column="red_img" property="redImg" jdbcType="VARCHAR"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="merchant_detail" property="merchantDetail" jdbcType="VARCHAR"/>
+        <result column="red_reward_desc" property="redRewardDesc" jdbcType="VARCHAR"/>
+        <result column="reward_money" property="rewardMoney" jdbcType="INTEGER"/>
+        <result column="extra_reward_desc" property="extraRewardDesc" jdbcType="VARCHAR"/>
+        <result column="extra_money" property="extraMoney" jdbcType="INTEGER"/>
+        <result column="red_sort" property="redSort" jdbcType="INTEGER"/>
+        <result column="red_desc" property="redDesc" jdbcType="VARCHAR"/>
+        <result column="detail_url" property="detailUrl" jdbcType="VARCHAR"/>
+        <result column="detail_deitor" property="detailDeitor" jdbcType="VARCHAR"/>
+        <result column="button_deitor" property="buttonDeitor" jdbcType="VARCHAR"/>
+        <result column="red_order" property="redOrder" jdbcType="INTEGER"/>
+        <result column="red_status" property="redStatus" jdbcType="TINYINT"/>
+        <result column="show_or_not" property="showOrNot" jdbcType="TINYINT"/>
+        <result column="start_time" property="startTime" jdbcType="BIGINT"/>
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT red_id, red_name, red_img, merchant_name, merchant_detail, 
+        red_reward_desc, reward_money, extra_reward_desc, extra_money, red_sort, 
+        red_desc, detail_url, detail_deitor, button_deitor, red_order, 
+        red_status, show_or_not, start_time, end_time, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.envolope.oss.model.ReSortRed">
+        <include refid="re_sort_red.SELECT_All_Column"/>
+        FROM re_sort_red
+        WHERE red_id = #{redId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.envolope.oss.model.ReSortRed">
+        DELETE FROM re_sort_red
+        WHERE red_id = #{redId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.envolope.oss.model.ReSortRed">
+        INSERT INTO re_sort_red ( red_name, 
+          red_img, merchant_name, merchant_detail, 
+          red_reward_desc, reward_money, extra_reward_desc, 
+          extra_money, red_sort, red_desc, 
+          detail_url, detail_deitor, button_deitor, 
+          red_order, red_status, show_or_not, 
+          start_time, end_time, create_time )
+        VALUES ( #{redName,jdbcType=VARCHAR}, 
+          #{redImg,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, #{merchantDetail,jdbcType=VARCHAR}, 
+          #{redRewardDesc,jdbcType=VARCHAR}, #{rewardMoney,jdbcType=INTEGER}, #{extraRewardDesc,jdbcType=VARCHAR}, 
+          #{extraMoney,jdbcType=INTEGER}, #{redSort,jdbcType=INTEGER}, #{redDesc,jdbcType=VARCHAR}, 
+          #{detailUrl,jdbcType=VARCHAR}, #{detailDeitor,jdbcType=VARCHAR}, #{buttonDeitor,jdbcType=VARCHAR}, 
+          #{redOrder,jdbcType=INTEGER}, #{redStatus,jdbcType=TINYINT}, #{showOrNot,jdbcType=TINYINT}, 
+          #{startTime,jdbcType=BIGINT}, #{endTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT} )
+        <selectKey keyProperty="redId" resultType="int">
+            SELECT LAST_INSERT_ID() AS redId
+        </selectKey>
+    </insert>
+    <insert id="insertSelective" parameterType="com.envolope.oss.model.ReSortRed">
+        INSERT INTO re_sort_red
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="redName != null">
+                red_name,
+            </if>
+            <if test="redImg != null">
+                red_img,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="merchantDetail != null">
+                merchant_detail,
+            </if>
+            <if test="redRewardDesc != null">
+                red_reward_desc,
+            </if>
+            <if test="rewardMoney != null">
+                reward_money,
+            </if>
+            <if test="extraRewardDesc != null">
+                extra_reward_desc,
+            </if>
+            <if test="extraMoney != null">
+                extra_money,
+            </if>
+            <if test="redSort != null">
+                red_sort,
+            </if>
+            <if test="redDesc != null">
+                red_desc,
+            </if>
+            <if test="detailUrl != null">
+                detail_url,
+            </if>
+            <if test="detailDeitor != null">
+                detail_deitor,
+            </if>
+            <if test="buttonDeitor != null">
+                button_deitor,
+            </if>
+            <if test="redOrder != null">
+                red_order,
+            </if>
+            <if test="redStatus != null">
+                red_status,
+            </if>
+            <if test="showOrNot != null">
+                show_or_not,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            <if test="redName != null">
+                #{redName,jdbcType=VARCHAR},
+            </if>
+            <if test="redImg != null">
+                #{redImg,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantDetail != null">
+                #{merchantDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="redRewardDesc != null">
+                #{redRewardDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="rewardMoney != null">
+                #{rewardMoney,jdbcType=INTEGER},
+            </if>
+            <if test="extraRewardDesc != null">
+                #{extraRewardDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="extraMoney != null">
+                #{extraMoney,jdbcType=INTEGER},
+            </if>
+            <if test="redSort != null">
+                #{redSort,jdbcType=INTEGER},
+            </if>
+            <if test="redDesc != null">
+                #{redDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="detailUrl != null">
+                #{detailUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="detailDeitor != null">
+                #{detailDeitor,jdbcType=VARCHAR},
+            </if>
+            <if test="buttonDeitor != null">
+                #{buttonDeitor,jdbcType=VARCHAR},
+            </if>
+            <if test="redOrder != null">
+                #{redOrder,jdbcType=INTEGER},
+            </if>
+            <if test="redStatus != null">
+                #{redStatus,jdbcType=TINYINT},
+            </if>
+            <if test="showOrNot != null">
+                #{showOrNot,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=BIGINT},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+        <selectKey keyProperty="redId" resultType="int">
+            SELECT LAST_INSERT_ID() AS redId
+        </selectKey>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO re_sort_red ( red_name, 
+          red_img, merchant_name, merchant_detail, 
+          red_reward_desc, reward_money, extra_reward_desc, 
+          extra_money, red_sort, red_desc, 
+          detail_url, detail_deitor, button_deitor, 
+          red_order, red_status, show_or_not, 
+          start_time, end_time, create_time )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.redName,jdbcType=VARCHAR}, 
+            #{item.redImg,jdbcType=VARCHAR}, #{item.merchantName,jdbcType=VARCHAR}, #{item.merchantDetail,jdbcType=VARCHAR}, 
+            #{item.redRewardDesc,jdbcType=VARCHAR}, #{item.rewardMoney,jdbcType=INTEGER}, #{item.extraRewardDesc,jdbcType=VARCHAR}, 
+            #{item.extraMoney,jdbcType=INTEGER}, #{item.redSort,jdbcType=INTEGER}, #{item.redDesc,jdbcType=VARCHAR}, 
+            #{item.detailUrl,jdbcType=VARCHAR}, #{item.detailDeitor,jdbcType=VARCHAR}, #{item.buttonDeitor,jdbcType=VARCHAR}, 
+            #{item.redOrder,jdbcType=INTEGER}, #{item.redStatus,jdbcType=TINYINT}, #{item.showOrNot,jdbcType=TINYINT}, 
+            #{item.startTime,jdbcType=BIGINT}, #{item.endTime,jdbcType=BIGINT}, #{item.createTime,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.envolope.oss.model.ReSortRed">
+        UPDATE re_sort_red
+        <set>
+            <if test="redName != null">
+                red_name = #{redName,jdbcType=VARCHAR},
+            </if>
+            <if test="redImg != null">
+                red_img = #{redImg,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantDetail != null">
+                merchant_detail = #{merchantDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="redRewardDesc != null">
+                red_reward_desc = #{redRewardDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="rewardMoney != null">
+                reward_money = #{rewardMoney,jdbcType=INTEGER},
+            </if>
+            <if test="extraRewardDesc != null">
+                extra_reward_desc = #{extraRewardDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="extraMoney != null">
+                extra_money = #{extraMoney,jdbcType=INTEGER},
+            </if>
+            <if test="redSort != null">
+                red_sort = #{redSort,jdbcType=INTEGER},
+            </if>
+            <if test="redDesc != null">
+                red_desc = #{redDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="detailUrl != null">
+                detail_url = #{detailUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="detailDeitor != null">
+                detail_deitor = #{detailDeitor,jdbcType=VARCHAR},
+            </if>
+            <if test="buttonDeitor != null">
+                button_deitor = #{buttonDeitor,jdbcType=VARCHAR},
+            </if>
+            <if test="redOrder != null">
+                red_order = #{redOrder,jdbcType=INTEGER},
+            </if>
+            <if test="redStatus != null">
+                red_status = #{redStatus,jdbcType=TINYINT},
+            </if>
+            <if test="showOrNot != null">
+                show_or_not = #{showOrNot,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=BIGINT},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE red_id = #{redId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.envolope.oss.model.ReSortRed">
+        UPDATE re_sort_red
+        SET red_name = #{redName,jdbcType=VARCHAR},
+            red_img = #{redImg,jdbcType=VARCHAR},
+            merchant_name = #{merchantName,jdbcType=VARCHAR},
+            merchant_detail = #{merchantDetail,jdbcType=VARCHAR},
+            red_reward_desc = #{redRewardDesc,jdbcType=VARCHAR},
+            reward_money = #{rewardMoney,jdbcType=INTEGER},
+            extra_reward_desc = #{extraRewardDesc,jdbcType=VARCHAR},
+            extra_money = #{extraMoney,jdbcType=INTEGER},
+            red_sort = #{redSort,jdbcType=INTEGER},
+            red_desc = #{redDesc,jdbcType=VARCHAR},
+            detail_url = #{detailUrl,jdbcType=VARCHAR},
+            detail_deitor = #{detailDeitor,jdbcType=VARCHAR},
+            button_deitor = #{buttonDeitor,jdbcType=VARCHAR},
+            red_order = #{redOrder,jdbcType=INTEGER},
+            red_status = #{redStatus,jdbcType=TINYINT},
+            show_or_not = #{showOrNot,jdbcType=TINYINT},
+            start_time = #{startTime,jdbcType=BIGINT},
+            end_time = #{endTime,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=BIGINT}
+        WHERE red_id = #{redId,jdbcType=INTEGER}
+    </update>
+</mapper>
